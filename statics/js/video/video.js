@@ -6,6 +6,7 @@ const controls_process_icon = document.querySelector('#video_wrapper>.controls>.
 const controls_play = document.querySelector('#video_wrapper>.controls>.bottom>.left>img')
 const controls_location = document.querySelector('#video_wrapper>.controls>.bottom>.left>.location')
 const controls_speed = document.querySelector('#video_wrapper>.controls>.bottom>.right>#speed')
+const controls_mute = document.querySelector('#video_wrapper>.controls>.bottom>.right>#mute')
 const controls_pip = document.querySelector('#video_wrapper>.controls>.bottom>.right>#pip')
 const danmaku_area = document.querySelector('#video_wrapper>.danmaku_area')
 const danmaku_switch = document.querySelector('#video_wrapper>.bottom>.control>.switch')
@@ -85,6 +86,15 @@ function switchDanmakuStatus() {
         danmaku_switch.classList.remove('off')
         danmaku_switch.classList.add('on')
         danmaku_area.style.visibility = 'visible'
+    }
+}
+function switchMuteStatus() {
+    if (video.muted) {
+        video.muted = false
+        controls_mute.src = '/statics/images/video/controls-mute.svg'
+    } else {
+        video.muted = true
+        controls_mute.src = '/statics/images/video/controls-unmute.svg'
     }
 }
 function switchPIPStatus() {
@@ -199,6 +209,7 @@ function init() {
         danmaku_area.innerHTML = ''
     })
     controls_speed.addEventListener('click', switchPlaySpeed)
+    controls_mute.addEventListener('click', switchMuteStatus)
     controls_pip.addEventListener('click', switchPIPStatus)
     color_input.addEventListener('input', () => {
         color_input.value = color_input.value.toUpperCase()
