@@ -5,6 +5,7 @@ const controls_process_played = document.querySelector('#video_wrapper>.controls
 const controls_process_icon = document.querySelector('#video_wrapper>.controls>.process>.icon')
 const controls_play = document.querySelector('#video_wrapper>.controls>.bottom>.left>img')
 const controls_location = document.querySelector('#video_wrapper>.controls>.bottom>.left>.location')
+const controls_speed = document.querySelector('#video_wrapper>.controls>.bottom>.right>#speed')
 const controls_pip = document.querySelector('#video_wrapper>.controls>.bottom>.right>#pip')
 const danmaku_area = document.querySelector('#video_wrapper>.danmaku_area')
 const danmaku_switch = document.querySelector('#video_wrapper>.bottom>.control>.switch')
@@ -93,6 +94,34 @@ function switchPIPStatus() {
         video.requestPictureInPicture()
     }
 }
+function switchPlaySpeed() {
+    switch (video.playbackRate) {
+        case 1:
+            video.playbackRate = 1.25
+            controls_speed.textContent = '1.25x'
+            break;
+        case 1.25:
+            video.playbackRate = 1.5
+            controls_speed.textContent = '1.5x'
+            break;
+        case 1.5:
+            video.playbackRate = 2
+            controls_speed.textContent = '2.0x'
+            break;
+        case 2:
+            video.playbackRate = 0.5
+            controls_speed.textContent = '0.5x'
+            break;
+        case 0.5:
+            video.playbackRate = 0.75
+            controls_speed.textContent = '0.75x'
+            break;
+        default: 
+            video.playbackRate = 1
+            controls_speed.textContent = '倍速'
+            break;
+    }
+}
 function changeDanmakuType(type) {
     for (let i in danmaku_type) {
         if (i === type) {
@@ -169,6 +198,7 @@ function init() {
         video.currentTime = player_ratio * video.duration
         danmaku_area.innerHTML = ''
     })
+    controls_speed.addEventListener('click', switchPlaySpeed)
     controls_pip.addEventListener('click', switchPIPStatus)
     color_input.addEventListener('input', () => {
         color_input.value = color_input.value.toUpperCase()
