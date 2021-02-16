@@ -2,9 +2,19 @@
     display: grid;
     width: 1152px;
     margin: 0 auto;
-    grid-template-columns: 802px 320px;
-    grid-template-rows: 96px auto;
     justify-content: space-between;
+}
+
+#main.normal {
+    grid-template-columns: 802px 320px;
+    grid-template-rows: 96px 585px auto;
+}
+
+#main.normal>#recommend {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 2;
+    grid-row-end: 4;
 }
 
 #top h1 {
@@ -402,6 +412,51 @@
 }
 #video_wrapper>.bottom>.control>.send>button:hover {
     background-color: #00b5e5;
+}
+
+@font-face {
+    font-family: "vanfont";
+    src: url(/statics/fonts/vanfont.woff);
+}
+
+#toolbar>.main {
+    display: flex;
+    padding: 16px 0 12px 0;
+    border-bottom: 1px solid #e5e9f0;
+}
+
+#toolbar>.main>span {
+    color: #757575;
+    user-select: none;
+    cursor: pointer;
+    font-size: 14px;
+    width: 100px;
+    display: flex;
+    align-items: center;
+    align-content: center;
+}
+
+#toolbar>.main>span:hover {
+    color: #00A1D6;
+}
+
+#toolbar>.main>span::before {
+    font-family: "vanfont";
+    font-size: 28px;
+    margin-right: 6px;
+}
+
+#toolbar>.main>.likes::before {
+    content: "\E6E0"
+}
+#toolbar>.main>.coins::before {
+    content: "\E6E4"
+}
+#toolbar>.main>.saves::before {
+    content: "\E6E1"
+}
+#toolbar>.main>.shares::before {
+    content: "\E70F"
 }
 
 #recommend>section {
