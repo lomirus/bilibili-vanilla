@@ -115,22 +115,26 @@
 
 #video_wrapper>.controls {
     position: absolute;
-    width: 802px;
+    height: 44px;
+    width: 100%;
     bottom: 46px;
     box-sizing: border-box;
-    padding: 6px;
+    padding: 0 12px;
     z-index: 3;
+    user-select: none;
 }
 
 #video_wrapper>.controls>.process {
-    height: 10px;
+    height: 16px;
+    width: 778px;
     cursor: pointer;
+    position: absolute;
 }
 #video_wrapper>.controls>.process>.played,
 #video_wrapper>.controls>.process>.unplayed{
-    top: 11px;
+    top: 7px;
     height: 2px;
-    width: 790px;
+    width: 100%;
     position: absolute;
     transition: all ease .2s;
 }
@@ -144,8 +148,7 @@
 }
 #video_wrapper>.controls>.process>.icon{
     position: absolute;
-    top: 0;
-    left: -11px;
+    top: 0px;
     transition: all ease .2s;
     transform: scale(0);
     pointer-events: none;
@@ -157,21 +160,49 @@
 #video_wrapper>.controls>.process:hover>.icon{
     transform: scale(1);
 }
-#video_wrapper>.controls>.left {
-    padding-left: 8px;
+#video_wrapper>.controls>.bottom {
+    margin-top: 14px;
+    height: 29px;
+}
+#video_wrapper>.controls>.bottom>.left {
+    float: left;
     display: flex;
     align-items: center;
 }
-#video_wrapper>.controls>.left>img {
+#video_wrapper>.controls>.bottom>.left>img {
     cursor: pointer;
+    width: 36px;
+    height: 22px;
 }
-#video_wrapper>.controls>.left>.location {
+#video_wrapper>.controls>.bottom>.left>.location {
     color: rgba(255,255,255,.9);
     margin-left: 4px;
     font-size: 12px;
 }
-#video_wrapper>.controls>.left>.location>.divider {
+#video_wrapper>.controls>.bottom>.left>.location>.divider {
     margin: 0 4px
+}
+#video_wrapper>.controls>.bottom>.right {
+    float: right;
+    display: flex;
+    align-items: center;
+    color: rgba(255,255,255,.8);
+    font-size: 14px;
+    font-weight: 600;
+}
+#video_wrapper>.controls>.bottom>.right>* {
+    cursor: pointer;
+}
+#video_wrapper>.controls>.bottom>.right>#quality {
+    margin-right: 10px;
+}
+#video_wrapper>.controls>.bottom>.right>#speed {
+    width: 50px;
+    text-align: center;
+}
+#video_wrapper>.controls>.bottom>.right>img {
+    width: 36px;
+    height: 22px;
 }
 
 #video_wrapper>.hover {

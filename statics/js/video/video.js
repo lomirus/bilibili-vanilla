@@ -3,8 +3,8 @@ const video = document.querySelector('video')
 const controls_process = document.querySelector('#video_wrapper>.controls>.process')
 const controls_process_played = document.querySelector('#video_wrapper>.controls>.process>.played')
 const controls_process_icon = document.querySelector('#video_wrapper>.controls>.process>.icon')
-const controls_play = document.querySelector('#video_wrapper>.controls>.left>img')
-const controls_location = document.querySelector('#video_wrapper>.controls>.left>.location')
+const controls_play = document.querySelector('#video_wrapper>.controls>.bottom>.left>img')
+const controls_location = document.querySelector('#video_wrapper>.controls>.bottom>.left>.location')
 const danmaku_area = document.querySelector('#video_wrapper>.danmaku_area')
 const danmaku_switch = document.querySelector('#video_wrapper>.bottom>.control>.switch')
 const danmaku_font_settings = document.querySelector('#video_wrapper>.hover>.font_settings')
@@ -77,9 +77,9 @@ function switchVideoPlayStatus() {
     }
 }
 function updateVideoLocation(ratio = video.currentTime / video.duration) {
-    controls_process_played.style.width = ratio * 790 + 'px'
+    controls_process_played.style.width = ratio * 778 + 'px'
     controls_location.children[0].innerText = formatDuration(video.currentTime)
-    controls_process_icon.style.left = ratio * 790 - 5 + 'px' // ratio * 790 - (22/2) + 6 + 'px'
+    controls_process_icon.style.left = ratio * 778 - 11 + 'px' // ratio * 778 - (22/2) + 'px'
 }
 
 function rgbToHex(rgb) {
