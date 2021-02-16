@@ -1,7 +1,7 @@
 {
     "name": "Bilibili",
     "start_url": ".",
-    "display": "standalone",
+    "display": "minimal-ui",
     "icons": [
         {
             "src": "/statics/images/pwa/icon_192.png",

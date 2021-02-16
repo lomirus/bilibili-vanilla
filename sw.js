@@ -8,6 +8,4 @@ self.addEventListener('activate', () => {
     console.log('激活成功')
 })
 
-self.addEventListener('fetch', event => {
-    console.log(event.request)
-})
+//self.addEventListener('fetch', event => {})
