@@ -12,9 +12,11 @@ const danmaku_font_settings = document.querySelector('#video_wrapper>.hover>.fon
 const danmaku_font_switch = document.querySelector('#video_wrapper>.bottom>.control>.send>.edit>div')
 const danmaku_send = document.querySelector('#video_wrapper>.bottom>.control>.send button')
 const danmaku_input = document.querySelector('#video_wrapper>.bottom>.control>.send input')
-const scroll_type = document.querySelector('.font_settings>.type>.scroll')
-const top_type = document.querySelector('.font_settings>.type>.top')
-const bottom_type = document.querySelector('.font_settings>.type>.bottom')
+const danmaku_type = {
+    'scroll': document.querySelector('.font_settings>.type>.scroll'),
+    'top': document.querySelector('.font_settings>.type>.top'),
+    'bottom': document.querySelector('.font_settings>.type>.bottom'),
+}
 const recommend = document.querySelector('#recommend')
 const color_input = document.querySelector('.font_settings>.color>.edit>input')
 const color_preview = document.querySelector('.font_settings>.color>.edit>div')
@@ -73,15 +75,42 @@ function switchVideoPlayStatus() {
         video.pause()
     }
 }
-function updateVideoLocation(ratio = video.currentTime / video.duration) {
-    controls_process_played.style.width = ratio * 778 + 'px'
-    controls_location.children[0].innerText = formatDuration(video.currentTime)
-    controls_process_icon.style.left = ratio * 778 - 11 + 'px' // ratio * 778 - (22/2) + 'px'
+function switchDanmakuStatus() {
+    if (danmaku_switch.classList.contains('on')) {
+        danmaku_switch.classList.remove('on')
+        danmaku_switch.classList.add('off')
+        danmaku_area.style.visibility = 'hidden'
+    } else {
+        danmaku_switch.classList.remove('off')
+        danmaku_switch.classList.add('on')
+        danmaku_area.style.visibility = 'visible'
+    }
+}
+function switchPIPStatus() {
+    if (document.pictureInPictureElement) {
+        document.exitPictureInPicture()
+    } else {
+        video.requestPictureInPicture()
+    }
+}
+function changeDanmakuType(type) {
+    for (let i in danmaku_type) {
+        if (i === type) {
+            danmaku_type[i].classList.add('chosen')
+        } else {
+            danmaku_type[i].classList.remove('chosen')
+        }
+    }
+    chosen_danmaku_type = type
+}
+function changeDanmakuColor(color) {
+    color_input.value = rgbToHex(color)
+    color_preview.style.backgroundColor = color
 }
 
 function rgbToHex(rgb) {
     return '#' + rgb.slice(4, -1).split(', ').map(v => {
-        let hex = parseInt(v).toString(16)
+        const hex = parseInt(v).toString(16)
         return hex.length === 1 ? '0' + hex : hex
     }).join('').toUpperCase()
 }
@@ -106,6 +135,9 @@ function formatDuration(duration) {
 }
 
 function init() {
+    video.addEventListener('canplay', () => {
+        controls_location.children[2].innerText = formatDuration(video.duration)
+    })
     video.addEventListener('click', switchVideoPlayStatus)
     video.addEventListener('play', () => {
         video_wrapper.classList.remove('paused')
@@ -115,18 +147,16 @@ function init() {
         video_wrapper.classList.add('paused')
         controls_play.setAttribute('src', '/statics/images/video/controls-play.svg')
     })
-    controls_play.addEventListener('click', switchVideoPlayStatus)
-    danmaku_switch.addEventListener('click', () => {
-        if (danmaku_switch.classList.contains('on')) {
-            danmaku_switch.classList.remove('on')
-            danmaku_switch.classList.add('off')
-            danmaku_area.style.visibility = 'hidden'
-        } else {
-            danmaku_switch.classList.remove('off')
-            danmaku_switch.classList.add('on')
-            danmaku_area.style.visibility = 'visible'
-        }
+    video.addEventListener('timeupdate', () => {
+        const ratio = video.currentTime / video.duration
+        controls_process_played.style.width = ratio * 778 + 'px'
+        controls_location.children[0].innerText = formatDuration(video.currentTime)
+        controls_process_icon.style.left = ratio * 778 - 11 + 'px' // ratio * 778 - (22/2) + 'px'
     })
+    video.addEventListener('enterpictureinpicture', () => controls_pip.title = '关闭画中画')
+    video.addEventListener('leavepictureinpicture', () => controls_pip.title = '开启画中画')
+    controls_play.addEventListener('click', switchVideoPlayStatus)
+    danmaku_switch.addEventListener('click', switchDanmakuStatus)
     danmaku_font_switch.addEventListener('mouseover', () => danmaku_font_settings.style.display = 'block')
     danmaku_font_switch.addEventListener('mouseout', () => danmaku_font_settings.style.display = 'none')
     danmaku_font_settings.addEventListener('mouseover', () => danmaku_font_settings.style.display = 'block')
@@ -137,53 +167,17 @@ function init() {
     controls_process.addEventListener('click', e => {
         let player_ratio = e.offsetX / controls_process.offsetWidth
         video.currentTime = player_ratio * video.duration
-        updateVideoLocation(player_ratio)
         danmaku_area.innerHTML = ''
     })
-    controls_pip.addEventListener('click', () => {
-        if (document.pictureInPictureElement) {
-            document.exitPictureInPicture()
-            controls_pip.title = '开启画中画'
-        } else {
-            video.requestPictureInPicture()
-            controls_pip.title = '关闭画中画'
-        }
-    })
-    scroll_type.addEventListener('click', () => {
-        scroll_type.classList.add('chosen')
-        top_type.classList.remove('chosen')
-        bottom_type.classList.remove('chosen')
-        chosen_danmaku_type = 'scroll'
-    })
-    top_type.addEventListener('click', () => {
-        scroll_type.classList.remove('chosen')
-        top_type.classList.add('chosen')
-        bottom_type.classList.remove('chosen')
-        chosen_danmaku_type = 'top'
-    })
-    bottom_type.addEventListener('click', () => {
-        scroll_type.classList.remove('chosen')
-        top_type.classList.remove('chosen')
-        bottom_type.classList.add('chosen')
-        chosen_danmaku_type = 'bottom'
-    })
+    controls_pip.addEventListener('click', switchPIPStatus)
     color_input.addEventListener('input', () => {
         color_input.value = color_input.value.toUpperCase()
-        if (checkHex(color_input.value))
-            color_preview.style.backgroundColor = color_input.value
-        else
-            color_preview.style.backgroundColor = 'rgba(0,0,0,0)'
+        color_preview.style.backgroundColo = checkHex(color_input.value) ? color_input.value : 'rgba(0,0,0,0)';
     })
-    for (let i = 0; i < color_list.length; i++) {
-        color_list[i].addEventListener('click', () => {
-            color_input.value = rgbToHex(color_list[i].style.backgroundColor)
-            color_preview.style.backgroundColor = color_list[i].style.backgroundColor
-        })
-    }
-    setInterval(updateVideoLocation, 500)
-    video.addEventListener('canplay', () => {
-        controls_location.children[2].innerText = formatDuration(video.duration)
-    })
+    for (let i in danmaku_type)
+        danmaku_type[i].addEventListener('click', () => changeDanmakuType(i));
+    for (let v of color_list)
+        v.addEventListener('click', () => changeDanmakuColor(v.style.backgroundColor));
 }
 function test() {
     let recommend_data = [
