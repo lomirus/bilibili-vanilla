@@ -148,7 +148,7 @@
 }
 #video_wrapper>.controls>.process>.icon{
     position: absolute;
-    top: 0px;
+    top: -2px;
     transition: all ease .2s;
     transform: scale(0);
     pointer-events: none;

@@ -5,6 +5,7 @@ const controls_process_played = document.querySelector('#video_wrapper>.controls
 const controls_process_icon = document.querySelector('#video_wrapper>.controls>.process>.icon')
 const controls_play = document.querySelector('#video_wrapper>.controls>.bottom>.left>img')
 const controls_location = document.querySelector('#video_wrapper>.controls>.bottom>.left>.location')
+const controls_pip = document.querySelector('#video_wrapper>.controls>.bottom>.right>#pip')
 const danmaku_area = document.querySelector('#video_wrapper>.danmaku_area')
 const danmaku_switch = document.querySelector('#video_wrapper>.bottom>.control>.switch')
 const danmaku_font_settings = document.querySelector('#video_wrapper>.hover>.font_settings')
@@ -68,12 +69,8 @@ function loadDanmaku(data) {
 function switchVideoPlayStatus() {
     if (video.paused) {
         video.play()
-        video_wrapper.classList.remove('paused')
-        controls_play.setAttribute('src', '/statics/images/video/controls-pause.svg')
     } else {
         video.pause()
-        video_wrapper.classList.add('paused')
-        controls_play.setAttribute('src', '/statics/images/video/controls-play.svg')
     }
 }
 function updateVideoLocation(ratio = video.currentTime / video.duration) {
@@ -110,6 +107,14 @@ function formatDuration(duration) {
 
 function init() {
     video.addEventListener('click', switchVideoPlayStatus)
+    video.addEventListener('play', () => {
+        video_wrapper.classList.remove('paused')
+        controls_play.setAttribute('src', '/statics/images/video/controls-pause.svg')
+    })
+    video.addEventListener('pause', () => {
+        video_wrapper.classList.add('paused')
+        controls_play.setAttribute('src', '/statics/images/video/controls-play.svg')
+    })
     controls_play.addEventListener('click', switchVideoPlayStatus)
     danmaku_switch.addEventListener('click', () => {
         if (danmaku_switch.classList.contains('on')) {
@@ -134,6 +139,15 @@ function init() {
         video.currentTime = player_ratio * video.duration
         updateVideoLocation(player_ratio)
         danmaku_area.innerHTML = ''
+    })
+    controls_pip.addEventListener('click', () => {
+        if (document.pictureInPictureElement) {
+            document.exitPictureInPicture()
+            controls_pip.title = '开启画中画'
+        } else {
+            video.requestPictureInPicture()
+            controls_pip.title = '关闭画中画'
+        }
     })
     scroll_type.addEventListener('click', () => {
         scroll_type.classList.add('chosen')
