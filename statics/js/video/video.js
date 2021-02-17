@@ -219,6 +219,7 @@ function initVideo() {
                 return
             }
             if (!json.data.danmaku) json.data.danmaku = []
+            document.title = json.data.title + '_哔哩哔哩 (゜-゜)つロ 干杯~-bilibili'
             video_title.textContent = json.data.title
             video_time.textContent = json.data.time
             video_playNumber.textContent = json.data.views
