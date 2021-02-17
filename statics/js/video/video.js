@@ -1,13 +1,13 @@
 const video_id = parseInt(getQuery().id)
 const main = document.querySelector('#main')
-const video_wrapper = document.querySelector('#video_wrapper')
+const video_area = document.querySelector('#video_area')
 const video = document.querySelector('video')
 const video_title = document.querySelector('#top>h1')
 const video_time = document.querySelector('#top>.time')
 const video_playNumber = document.querySelector('#top>.play_number')
 const video_danmakuNumber = document.querySelector('#top>.danmaku_number')
-const bottom_audienceNumber = document.querySelector('#video_wrapper>.bottom>.info>.audience_number')
-const bottom_danmakuNumber = document.querySelector('#video_wrapper>.bottom>.info>.danmaku_number')
+const bottom_audienceNumber = document.querySelector('#video_area>.bottom>.info>.audience_number')
+const bottom_danmakuNumber = document.querySelector('#video_area>.bottom>.info>.danmaku_number')
 const toolbar_likes = document.querySelector('#toolbar>.main>.likes')
 const toolbar_coins = document.querySelector('#toolbar>.main>.coins')
 const toolbar_saves = document.querySelector('#toolbar>.main>.saves')
@@ -22,11 +22,11 @@ const controls_mute = document.querySelector('#video_wrapper>.controls>.bottom>.
 const controls_pip = document.querySelector('#video_wrapper>.controls>.bottom>.right>#pip')
 const controls_wide = document.querySelector('#video_wrapper>.controls>.bottom>.right>#wide')
 const danmaku_area = document.querySelector('#video_wrapper>.danmaku_area')
-const danmaku_switch = document.querySelector('#video_wrapper>.bottom>.control>.switch')
-const danmaku_font_settings = document.querySelector('#video_wrapper>.hover>.font_settings')
-const danmaku_font_switch = document.querySelector('#video_wrapper>.bottom>.control>.send>.edit>div')
-const danmaku_send = document.querySelector('#video_wrapper>.bottom>.control>.send button')
-const danmaku_input = document.querySelector('#video_wrapper>.bottom>.control>.send input')
+const danmaku_switch = document.querySelector('#video_area>.bottom>.control>.switch')
+const danmaku_font_settings = document.querySelector('#video_area>.hover>.font_settings')
+const danmaku_font_switch = document.querySelector('#video_area>.bottom>.control>.send>.edit>div')
+const danmaku_send = document.querySelector('#video_area>.bottom>.control>.send button')
+const danmaku_input = document.querySelector('#video_area>.bottom>.control>.send input')
 const danmaku_type = {
     'scroll': document.querySelector('.font_settings>.type>.scroll'),
     'top': document.querySelector('.font_settings>.type>.top'),
@@ -240,11 +240,11 @@ function init() {
     })
     video.addEventListener('click', switchVideoPlayStatus)
     video.addEventListener('play', () => {
-        video_wrapper.classList.remove('paused')
+        video_area.classList.remove('paused')
         controls_play.setAttribute('src', '/statics/images/video/controls-pause.svg')
     })
     video.addEventListener('pause', () => {
-        video_wrapper.classList.add('paused')
+        video_area.classList.add('paused')
         controls_play.setAttribute('src', '/statics/images/video/controls-play.svg')
     })
     video.addEventListener('timeupdate', () => {

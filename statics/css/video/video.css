@@ -78,20 +78,40 @@
      background-color: #00b5e6;
 }
 
-#video_wrapper {
+#video_area {
     box-shadow: 0 0 8px #e5e9ef;
     display: flex;
     flex-direction: column;
     height: 100%;
     position: relative;
 }
-#main.wide>#video_wrapper {
+
+.normal #video_area .danmaku {
+    animation: scroll-normal 12s linear 1;
+}
+.normal #video_area>.bottom>.control>.send>.edit>input {
+    width: 280px;
+}
+.wide #video_area {
     grid-column-start: 1;
     grid-column-end: 3;
 }
+.wide #video_area .danmaku {
+    animation: scroll-wide 12s linear 1;
+}
+.wide #video_area>.bottom>.control>.send>.edit>input {
+    width: 530px;
+}
+
+
+#video_wrapper {
+    height: calc(100% - 46px);
+    position: relative;
+}
 #video_wrapper>video {
     background-color: #000;
-    height: calc(100% - 46px);
+    height: 100%;
+    width: 100%;
 }
 
 @keyframes scroll-normal {
@@ -110,7 +130,7 @@
 }
 #video_wrapper>.danmaku_area {
     position: absolute;
-    height: calc(100% - 46px);
+    height: 100%;
     width: 100%;
     pointer-events: none;
     overflow: hidden;
@@ -123,13 +143,7 @@
     text-shadow: rgb(0 0 0) 1px 0 1px, rgb(0 0 0) 0 1px 1px, rgb(0 0 0) 0 -1px 1px, rgb(0 0 0) -1px 0 1px;
     font-weight: bold;
 }
-#main.normal>#video_wrapper>.danmaku_area>.danmaku {
-    animation: scroll-normal 12s linear 1;
-}
-#main.wide>#video_wrapper>.danmaku_area>.danmaku {
-    animation: scroll-wide 12s linear 1;
-}
-#video_wrapper.paused>.danmaku_area>.danmaku {
+.paused .danmaku {
     animation-play-state: paused!important;
 }
 
@@ -138,7 +152,7 @@
     position: absolute;
     height: 44px;
     width: 100%;
-    bottom: 46px;
+    bottom: 0;
     box-sizing: border-box;
     padding: 0 12px;
     z-index: 3;
@@ -227,11 +241,11 @@
     height: 22px;
 }
 
-#video_wrapper>.hover {
+#video_area>.hover {
    position: relative;
     z-index: 3;
 }
-#video_wrapper>.hover>.font_settings {
+#video_area>.hover>.font_settings {
     padding: 10px 20px;
     box-sizing: border-box;
     width: 216px;
@@ -242,122 +256,122 @@
     border-radius: 2px;
     user-select: none;
 }
-#video_wrapper>.hover>.font_settings>span {
+#video_area>.hover>.font_settings>span {
     color: #fff;
     font-size: 12px;
 }
-#video_wrapper>.hover>.font_settings>div {
+#video_area>.hover>.font_settings>div {
     margin: 8px 0 10px 0;
 }
-#video_wrapper>.hover>.font_settings>.type {
+#video_area>.hover>.font_settings>.type {
     display: grid;
     grid-template-columns: repeat(3, 26px);
     grid-column-gap: 22px;
     font-size: 12px;
     color: rgba(255,255,255,.8);
 }
-#video_wrapper>.hover>.font_settings>.type>div {
+#video_area>.hover>.font_settings>.type>div {
     display: flex;
     align-items: center;
     flex-direction: column;
     cursor: pointer;
 }
-#video_wrapper>.hover>.font_settings>.type>div:hover {
+#video_area>.hover>.font_settings>.type>div:hover {
     color: #FFFFFF
 }
-#video_wrapper>.hover>.font_settings>.type>div.chosen {
+#video_area>.hover>.font_settings>.type>div.chosen {
     color: #00A1D6
 }
-#video_wrapper>.hover>.font_settings>.type>div.scroll>img {
+#video_area>.hover>.font_settings>.type>div.scroll>img {
     content: url("/statics/images/video/scroll-type.svg");
 }
-#video_wrapper>.hover>.font_settings>.type>div.scroll:hover>img {
+#video_area>.hover>.font_settings>.type>div.scroll:hover>img {
     content: url("/statics/images/video/scroll-type-hover.svg");
 }
-#video_wrapper>.hover>.font_settings>.type>div.scroll.chosen>img {
+#video_area>.hover>.font_settings>.type>div.scroll.chosen>img {
     content: url("/statics/images/video/scroll-type-chosen.svg");
 }
-#video_wrapper>.hover>.font_settings>.type>div.top>img {
+#video_area>.hover>.font_settings>.type>div.top>img {
     content: url("/statics/images/video/scroll-type.svg");
 }
-#video_wrapper>.hover>.font_settings>.type>div.top:hover>img {
+#video_area>.hover>.font_settings>.type>div.top:hover>img {
     content: url("/statics/images/video/scroll-type-hover.svg");
 }
-#video_wrapper>.hover>.font_settings>.type>div.top.chosen>img {
+#video_area>.hover>.font_settings>.type>div.top.chosen>img {
     content: url("/statics/images/video/scroll-type-chosen.svg");
 }
-#video_wrapper>.hover>.font_settings>.type>div.bottom>img {
+#video_area>.hover>.font_settings>.type>div.bottom>img {
     content: url("/statics/images/video/scroll-type.svg");
 }
-#video_wrapper>.hover>.font_settings>.type>div.bottom:hover>img {
+#video_area>.hover>.font_settings>.type>div.bottom:hover>img {
     content: url("/statics/images/video/scroll-type-hover.svg");
 }
-#video_wrapper>.hover>.font_settings>.type>div.bottom.chosen>img {
+#video_area>.hover>.font_settings>.type>div.bottom.chosen>img {
     content: url("/statics/images/video/scroll-type-chosen.svg");
 }
-#video_wrapper>.hover>.font_settings>.color>.edit {
+#video_area>.hover>.font_settings>.color>.edit {
     display: grid;
     grid-template-columns: 120px 50px;
     grid-template-rows: 22px;
     justify-content: space-between;
     margin-bottom: 6px;
 }
-#video_wrapper>.hover>.font_settings>.color>.edit>input {
+#video_area>.hover>.font_settings>.color>.edit>input {
     background-color: transparent;
     color: #fff;
     border: 1px solid rgba(255,255,255,.2);
     border-radius: 2px;
     padding: 4px 7px;
 }
-#video_wrapper>.hover>.font_settings>.color>.edit>div {
+#video_area>.hover>.font_settings>.color>.edit>div {
     border-radius: 2px;
 }
-#video_wrapper>.hover>.font_settings>.color>.list {
+#video_area>.hover>.font_settings>.color>.list {
     display: grid;
     grid-template-columns: repeat(7, 14px);
     grid-template-rows: repeat(2, 14px);
     grid-row-gap: 4px;
     justify-content: space-between;
 }
-#video_wrapper>.hover>.font_settings>.color>.list>* {
+#video_area>.hover>.font_settings>.color>.list>* {
     border-radius: 2px;
     cursor: pointer;
 }
 
-#video_wrapper>.bottom {
+#video_area>.bottom {
     padding: 0 12px 0 20px;
     display: flex;
     height: 46px;
     justify-content: space-between;
 }
-#video_wrapper>.bottom>.info{
+#video_area>.bottom>.info{
     display: flex;
     align-items: center;
 }
-#video_wrapper>.bottom>.info>.audience_number{
+#video_area>.bottom>.info>.audience_number{
     font-size: 14px;
     font-weight: 600;
     color: #505050;
 }
-#video_wrapper>.bottom>.info>.audience_number::after {
+#video_area>.bottom>.info>.audience_number::after {
     content: "人正在看，";
     margin-left: 4px;
     font-size: 12px;
     font-weight: 400;
 }
-#video_wrapper>.bottom>.info>.danmaku_number::after {
+#video_area>.bottom>.info>.danmaku_number::after {
     content: "条弹幕";
     margin-left: 4px;
 }
-#video_wrapper>.bottom>.info>span{
+#video_area>.bottom>.info>span{
     font-size: 12px;
 }
 
-#video_wrapper>.bottom>.control {
+#video_area>.bottom>.control {
     display: flex;
     align-items: center;
 }
-#video_wrapper>.bottom>.control>.switch {
+#video_area>.bottom>.control>.switch {
     height: 18px;
     width: 30px;
     border-radius: 12px;
@@ -368,7 +382,7 @@
     cursor: pointer;
     transition: all .2s ease-in-out;
 }
-#video_wrapper>.bottom>.control>.switch>.sign {
+#video_area>.bottom>.control>.switch>.sign {
     width: 27px;
     height: 27px;
     border-radius: 50%;
@@ -380,33 +394,33 @@
     transform: scale(0.65);
     position: relative;
 }
-#video_wrapper>.bottom>.control>.switch.off {
+#video_area>.bottom>.control>.switch.off {
     border: 2px #757575 solid;
     background-color: #757575;
 }
-#video_wrapper>.bottom>.control>.switch.off>.sign {
+#video_area>.bottom>.control>.switch.off>.sign {
     left: -5px;
     color: #757575;
 }
-#video_wrapper>.bottom>.control>.switch.on {
+#video_area>.bottom>.control>.switch.on {
     border: 2px #00a1d6 solid;
     background-color: #00a1d6;
 }
-#video_wrapper>.bottom>.control>.switch.on>.sign {
+#video_area>.bottom>.control>.switch.on>.sign {
     left: 8px;
     color: #00a1d6;
 }
-#video_wrapper>.bottom>.control>.settings {
+#video_area>.bottom>.control>.settings {
     display: flex;
     align-items: center;
     margin-right: 8px;
     cursor: pointer;
 }
-#video_wrapper>.bottom>.control>.send {
+#video_area>.bottom>.control>.send {
     display: flex;
     align-items: center;
 }
-#video_wrapper>.bottom>.control>.send>.edit {
+#video_area>.bottom>.control>.send>.edit {
     display: flex;
     align-items: center;
     border: 1px solid #e7e7e7;
@@ -415,16 +429,16 @@
     height: 30px;
     box-sizing: border-box;
 }
-#video_wrapper>.bottom>.control>.send>.edit>div {
+#video_area>.bottom>.control>.send>.edit>div {
     height: 24px;
     width: 36px;
     background-image: url(/statics/images/video/danmaku-font.svg);
     cursor: pointer;
 }
-#video_wrapper>.bottom>.control>.send>.edit>div:hover {
+#video_area>.bottom>.control>.send>.edit>div:hover {
     background-image: url(/statics/images/video/danmaku-font-hover.svg);
 }
-#video_wrapper>.bottom>.control>.send>.edit>div:hover::before {
+#video_area>.bottom>.control>.send>.edit>div:hover::before {
     content: "";
     position: relative;
     display: block;
@@ -433,32 +447,26 @@
     height: 16px;
     width: 72px;
 }
-#video_wrapper>.bottom>.control>.send>.edit>input {
+#video_area>.bottom>.control>.send>.edit>input {
     border: none;
     background-color: #f4f4f4;
     font-size: 12px;
     color: #212121;
 }
-#main.normal>#video_wrapper>.bottom>.control>.send>.edit>input {
-    width: 280px;
-}
-#main.wide>#video_wrapper>.bottom>.control>.send>.edit>input {
-    width: 530px;
-}
-#video_wrapper>.bottom>.control>.send>.edit>input::-webkit-input-placeholder {
+#video_area>.bottom>.control>.send>.edit>input::-webkit-input-placeholder {
     color: #999999
 }
-#video_wrapper>.bottom>.control>.send>.edit>a {
+#video_area>.bottom>.control>.send>.edit>a {
     color: #757575;
     font-size: 12px;
     margin: 0 9px;
     cursor: pointer;
     transition: all .3s;
 }
-#video_wrapper>.bottom>.control>.send>.edit>a:hover {
+#video_area>.bottom>.control>.send>.edit>a:hover {
     color: #00a1d6;
 }
-#video_wrapper>.bottom>.control>.send>button {
+#video_area>.bottom>.control>.send>button {
     background-color: #00a1d6;
     color: #fff;
     border: none;
@@ -468,7 +476,7 @@
     cursor: pointer;
     transition: all .2s;
 }
-#video_wrapper>.bottom>.control>.send>button:hover {
+#video_area>.bottom>.control>.send>button:hover {
     background-color: #00b5e5;
 }
 
