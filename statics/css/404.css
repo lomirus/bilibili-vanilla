@@ -1,0 +1,33 @@
+body {
+    background-color: #F4F5F7;
+}
+
+header {
+    background-color: #FFFFFF;
+}
+
+#main {
+    background-color: #FFFFFF;
+    width: 980px;
+    margin: 30px auto;
+    padding-bottom: 40px;
+    border-radius: 10px;
+}
+
+#main button {
+    background-color: #00a1d6;
+    border: none;
+    color: #FFF;
+    width: 120px;
+    height: 40px;
+    padding: 0 20px;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: 0.2s;
+    cursor: pointer;
+    display: block;
+    margin: 0 auto;
+}
+#main button:hover {
+    background-color: #00b5e5;
+}
