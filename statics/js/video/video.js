@@ -1,6 +1,7 @@
 const video_id = parseInt(getQuery().id)
 const main = document.querySelector('#main')
 const video_area = document.querySelector('#video_area')
+const video_wrapper = document.querySelector('#video_wrapper')
 const video = document.querySelector('video')
 const video_title = document.querySelector('#top>h1')
 const video_time = document.querySelector('#top>.time')
@@ -22,6 +23,7 @@ const controls_mute = document.querySelector('#video_wrapper>.controls>.bottom>.
 const controls_pip = document.querySelector('#video_wrapper>.controls>.bottom>.right>#pip')
 const controls_wide = document.querySelector('#video_wrapper>.controls>.bottom>.right>#wide')
 const controls_fullPage = document.querySelector('#video_wrapper>.controls>.bottom>.right>#fullPage')
+const controls_fullScreen = document.querySelector('#video_wrapper>.controls>.bottom>.right>#fullScreen')
 const danmaku_area = document.querySelector('#video_wrapper>.danmaku_area')
 const danmaku_switch = document.querySelector('#video_area>.bottom>.control>.switch')
 const danmaku_font_settings = document.querySelector('#video_area>.hover>.font_settings')
@@ -210,6 +212,13 @@ function switchVideoSize(size) {
             }; break;
     }
 }
+function switchFullSceen() {
+    if (document.fullscreenElement) {
+        document.exitFullscreen()
+    } else {
+        video_wrapper.requestFullscreen()
+    }
+}
 function changeDanmakuType(type) {
     for (let i in danmaku_type) {
         if (i === type) {
@@ -284,6 +293,9 @@ function initVideo() {
 
 function init() {
     initVideo()
+    document.addEventListener('fullscreenchange', () => {
+        controls_fullScreen.title = document.fullscreenElement ? '退出全屏' : '进入全屏'
+    })
     video.addEventListener('canplay', () => {
         controls_location.children[2].innerText = formatDuration(video.duration)
     })
@@ -323,6 +335,7 @@ function init() {
     controls_pip.addEventListener('click', switchPIPStatus)
     controls_wide.addEventListener('click', () => switchVideoSize('wide'))
     controls_fullPage.addEventListener('click', () => switchVideoSize('fullPage'))
+    controls_fullScreen.addEventListener('click', switchFullSceen)
     color_input.addEventListener('input', () => {
         color_input.value = color_input.value.toUpperCase()
         color_preview.style.backgroundColo = checkHex(color_input.value) ? color_input.value : 'rgba(0,0,0,0)';
