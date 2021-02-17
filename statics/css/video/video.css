@@ -437,7 +437,12 @@
     background-color: #f4f4f4;
     font-size: 12px;
     color: #212121;
+}
+#main.normal>#video_wrapper>.bottom>.control>.send>.edit>input {
     width: 280px;
+}
+#main.wide>#video_wrapper>.bottom>.control>.send>.edit>input {
+    width: 530px;
 }
 #video_wrapper>.bottom>.control>.send>.edit>input::-webkit-input-placeholder {
     color: #999999
