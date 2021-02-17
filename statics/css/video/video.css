@@ -113,6 +113,9 @@
 .fullPage #video_area .danmaku {
     animation: scroll-full 12s linear 1;
 }
+.fullScreen #video_area .danmaku {
+    animation: scroll-full 12s linear 1;
+}
 
 
 #video_wrapper {

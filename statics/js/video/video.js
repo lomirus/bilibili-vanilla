@@ -169,6 +169,12 @@ function switchVideoSize(size) {
         controls_fullPage.title = '网页全屏'
         document.documentElement.style.overflow = ''
     }
+    function setFullScreen() {
+        video_wrapper.requestFullscreen()
+    }
+    function exitFullScreen() {
+        document.exitFullscreen()
+    }
     danmaku_area.innerHTML = ''
     switch (main.getAttribute('class')) {
         case 'normal':
@@ -176,47 +182,61 @@ function switchVideoSize(size) {
                 case 'wide':
                     main.setAttribute('class', 'wide');
                     setWide()
-                    exitFullPage()
                     break;
                 case 'fullPage':
                     main.setAttribute('class', 'fullPage');
-                    exitWide()
                     setFullPage()
+                    break;
+                case 'fullScreen':
+                    main.setAttribute('class', 'fullScreen');
+                    setFullScreen()
                     break;
             }; break;
         case 'wide':
+            exitWide()
             switch (size) {
                 case 'wide':
                     main.setAttribute('class', 'normal');
-                    exitWide()
-                    exitFullPage()
                     break;
                 case 'fullPage':
                     main.setAttribute('class', 'fullPage');
-                    exitWide()
                     setFullPage()
+                    break;
+                case 'fullScreen':
+                    main.setAttribute('class', 'fullScreen');
+                    setFullScreen()
                     break;
             }; break;
         case 'fullPage':
+            exitFullPage()
             switch (size) {
                 case 'wide':
                     main.setAttribute('class', 'wide');
                     setWide()
-                    exitFullPage()
                     break;
                 case 'fullPage':
                     main.setAttribute('class', 'normal');
-                    exitWide()
-                    exitFullPage()
+                    break;
+                case 'fullScreen':
+                    main.setAttribute('class', 'fullScreen');
+                    setFullScreen()
                     break;
             }; break;
-    }
-}
-function switchFullSceen() {
-    if (document.fullscreenElement) {
-        document.exitFullscreen()
-    } else {
-        video_wrapper.requestFullscreen()
+        case 'fullScreen':
+            exitFullScreen()
+            switch (size) {
+                case 'wide':
+                    main.setAttribute('class', 'wide');
+                    setWide();
+                    break;
+                case 'fullPage':
+                    main.setAttribute('class', 'fullPage');
+                    setFullPage();
+                    break;
+                case 'fullScreen':
+                    main.setAttribute('class', 'normal');
+                    break;
+            }; break;
     }
 }
 function changeDanmakuType(type) {
@@ -294,7 +314,14 @@ function initVideo() {
 function init() {
     initVideo()
     document.addEventListener('fullscreenchange', () => {
-        controls_fullScreen.title = document.fullscreenElement ? '退出全屏' : '进入全屏'
+        if (document.fullscreenElement) {
+            controls_fullScreen.title = '退出全屏'
+        } else {
+            controls_fullScreen.title = '进入全屏'
+            if (main.getAttribute('class') === 'fullScreen') {
+                main.setAttribute('class', 'normal');
+            }
+        }
     })
     video.addEventListener('canplay', () => {
         controls_location.children[2].innerText = formatDuration(video.duration)
@@ -335,7 +362,7 @@ function init() {
     controls_pip.addEventListener('click', switchPIPStatus)
     controls_wide.addEventListener('click', () => switchVideoSize('wide'))
     controls_fullPage.addEventListener('click', () => switchVideoSize('fullPage'))
-    controls_fullScreen.addEventListener('click', switchFullSceen)
+    controls_fullScreen.addEventListener('click', () => switchVideoSize('fullScreen'))
     color_input.addEventListener('input', () => {
         color_input.value = color_input.value.toUpperCase()
         color_preview.style.backgroundColo = checkHex(color_input.value) ? color_input.value : 'rgba(0,0,0,0)';
