@@ -21,7 +21,7 @@ async function init() {
         case 'O': gender_span.innerText = '其他'; break;
         case 'N': gender_span.innerText = '保密'; break;
     }
-    if (user.data.Birthday === '9999-12-12T00:00:00Z') {
+    if (user.data.Birthday.substring(0,4) === '9999') {
         birthday_span.innerText = '未填写'
     } else {
         birthday_span.innerText = user.data.Birthday.substring(0, 10)
