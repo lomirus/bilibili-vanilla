@@ -106,6 +106,13 @@ const submit_button = document.querySelector('#submit')
 const video_reader = new FileReader()
 const cover_reader = new FileReader()
 
+function getNowChannel() {
+    return channel_data
+                .filter(v =>
+                    v.main === main_channel.options[main_channel.selectedIndex].value &&
+                    v.sub === sub_channel.options[sub_channel.selectedIndex].value
+                )[0]
+}
 function createLabel(){
     const newLabel = document.createElement('span')
     newLabel.textContent = label_input.value
@@ -141,20 +148,10 @@ function init() {
                 .filter(v => v.main === main_channel.options[main_channel.selectedIndex].value)
                 .map(v => `<option value="${v.sub}">${v.sub}</option>`)
                 .join('')
-        channel_description.textContent =
-            channel_data
-                .filter(v =>
-                    v.main === main_channel.options[main_channel.selectedIndex].value &&
-                    v.sub === sub_channel.options[sub_channel.selectedIndex].value
-                )[0].description
+        channel_description.textContent = getNowChannel().description
     }
     sub_channel.onchange = function () {
-        channel_description.textContent =
-            channel_data
-                .filter(v =>
-                    v.main === main_channel.options[main_channel.selectedIndex].value &&
-                    v.sub === sub_channel.options[sub_channel.selectedIndex].value
-                )[0].description
+        channel_description.textContent = getNowChannel().description
     }
     label_input.oninput = updateLabelButton
     label_button.onclick = function () {
@@ -207,11 +204,7 @@ function init() {
         const video = upload_video.files[0]
         const cover = upload_cover.files[0]
         const title = title_input.value
-        const channel = channel_data
-            .filter(v => 
-                main_channel.options[main_channel.selectedIndex].textContent === v.main &&
-                sub_channel.options[sub_channel.selectedIndex].textContent === v.sub
-            )[0].id
+        const channel = getNowChannel().id
         const label = JSON.stringify([...label_list.children].map(v => v.textContent))
         const description = description_input.value
         const form = new FormData();
