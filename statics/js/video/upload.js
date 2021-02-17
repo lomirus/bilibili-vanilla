@@ -201,6 +201,7 @@ function init() {
             return
         }
         submit_button.textContent = '提交中...'
+        submit_button.setAttribute('disabled', 'disabled')
         const video = upload_video.files[0]
         const cover = upload_cover.files[0]
         const title = title_input.value
@@ -223,10 +224,12 @@ function init() {
             .then(json => {
                 if (json.status) {
                     alert("上传成功")
+                    window.location.href = '/video/?id=' + json.data
                 } else {
                     alert("上传失败：" + json.data)
+                    submit_button.removeAttribute('disabled')
+                    submit_button.textContent = '提交'
                 }
-                submit_button.textContent = '提交'
             })
     }
 }
