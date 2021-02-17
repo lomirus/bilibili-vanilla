@@ -92,9 +92,11 @@ function switchMuteStatus() {
     if (video.muted) {
         video.muted = false
         controls_mute.src = '/statics/images/video/controls-mute.svg'
+        controls_mute.title = '开启静音'
     } else {
         video.muted = true
         controls_mute.src = '/statics/images/video/controls-unmute.svg'
+        controls_mute.title = '取消静音'
     }
 }
 function switchPIPStatus() {
