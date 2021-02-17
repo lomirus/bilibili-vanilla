@@ -43,6 +43,10 @@ let chosen_danmaku_type = 'scroll'
 
 class Danmaku {
     constructor(v) {
+        if (v.type != 'scroll') {
+            alert('目前暂时只能发送滚动弹幕')
+            return
+        }
         let danmaku = document.createElement('div')
         danmaku.classList.add('danmaku')
         danmaku.innerText = v.value;
@@ -350,7 +354,12 @@ function init() {
     danmaku_font_settings.addEventListener('mouseover', () => danmaku_font_settings.style.display = 'block')
     danmaku_font_settings.addEventListener('mouseout', () => danmaku_font_settings.style.display = 'none')
     danmaku_send.addEventListener('click', () => {
-        new Danmaku(danmaku_input.value, color_input.value, chosen_danmaku_type)
+        new Danmaku({
+            value:danmaku_input.value,
+            color: color_input.value.substring(1),
+            id: parseInt(Math.random * 10000000),
+            type: chosen_danmaku_type
+        })
     })
     controls_process.addEventListener('click', e => {
         let player_ratio = e.offsetX / controls_process.offsetWidth
