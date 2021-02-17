@@ -1,3 +1,4 @@
+const main = document.querySelector('#main')
 const video_wrapper = document.querySelector('#video_wrapper')
 const video = document.querySelector('video')
 const controls_process = document.querySelector('#video_wrapper>.controls>.process')
@@ -8,6 +9,7 @@ const controls_location = document.querySelector('#video_wrapper>.controls>.bott
 const controls_speed = document.querySelector('#video_wrapper>.controls>.bottom>.right>#speed')
 const controls_mute = document.querySelector('#video_wrapper>.controls>.bottom>.right>#mute')
 const controls_pip = document.querySelector('#video_wrapper>.controls>.bottom>.right>#pip')
+const controls_wide = document.querySelector('#video_wrapper>.controls>.bottom>.right>#wide')
 const danmaku_area = document.querySelector('#video_wrapper>.danmaku_area')
 const danmaku_switch = document.querySelector('#video_wrapper>.bottom>.control>.switch')
 const danmaku_font_settings = document.querySelector('#video_wrapper>.hover>.font_settings')
@@ -134,6 +136,20 @@ function switchPlaySpeed() {
             break;
     }
 }
+function switchWide() {
+    if (main.classList.contains('normal')) {
+        main.classList.remove('normal')
+        main.classList.add('wide')
+        controls_wide.src = '/statics/images/video/controls-wideExit.svg'
+        controls_wide.title = '退出宽屏'
+    } else if (main.classList.contains('wide')) {
+        main.classList.remove('wide')
+        main.classList.add('normal')
+        controls_wide.src = '/statics/images/video/controls-wide.svg'
+        controls_wide.title = '宽屏模式'
+    }
+    danmaku_area.innerHTML = ''
+}
 function changeDanmakuType(type) {
     for (let i in danmaku_type) {
         if (i === type) {
@@ -190,9 +206,9 @@ function init() {
     })
     video.addEventListener('timeupdate', () => {
         const ratio = video.currentTime / video.duration
-        controls_process_played.style.width = ratio * 778 + 'px'
+        controls_process_played.style.width = ratio * controls_process.offsetWidth + 'px'
         controls_location.children[0].innerText = formatDuration(video.currentTime)
-        controls_process_icon.style.left = ratio * 778 - 11 + 'px' // ratio * 778 - (22/2) + 'px'
+        controls_process_icon.style.left = ratio * controls_process.offsetWidth - 11 + 'px' // ratio * 778 - (22/2) + 'px'
     })
     video.addEventListener('enterpictureinpicture', () => controls_pip.title = '关闭画中画')
     video.addEventListener('leavepictureinpicture', () => controls_pip.title = '开启画中画')
@@ -213,6 +229,7 @@ function init() {
     controls_speed.addEventListener('click', switchPlaySpeed)
     controls_mute.addEventListener('click', switchMuteStatus)
     controls_pip.addEventListener('click', switchPIPStatus)
+    controls_wide.addEventListener('click', switchWide)
     color_input.addEventListener('input', () => {
         color_input.value = color_input.value.toUpperCase()
         color_preview.style.backgroundColo = checkHex(color_input.value) ? color_input.value : 'rgba(0,0,0,0)';

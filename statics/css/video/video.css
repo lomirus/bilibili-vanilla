@@ -9,6 +9,10 @@
     grid-template-columns: 802px 320px;
     grid-template-rows: 96px 585px auto;
 }
+#main.wide {
+    grid-template-columns: 802px 320px;
+    grid-template-rows: 96px 694px auto;
+}
 
 #main.normal>#recommend {
     grid-column-start: 2;
@@ -78,24 +82,36 @@
     box-shadow: 0 0 8px #e5e9ef;
     display: flex;
     flex-direction: column;
-    height: 585px;
+    height: 100%;
     position: relative;
+}
+#main.wide>#video_wrapper {
+    grid-column-start: 1;
+    grid-column-end: 3;
 }
 #video_wrapper>video {
     background-color: #000;
+    height: calc(100% - 46px);
 }
 
-@keyframes scroll {
+@keyframes scroll-normal {
     from {
         transform: translateX(802px);
     } to {
         transform: translateX(-100%);
     }
 }
+@keyframes scroll-wide {
+    from {
+        transform: translateX(1152px);
+    } to {
+        transform: translateX(-100%);
+    }
+}
 #video_wrapper>.danmaku_area {
     position: absolute;
-    height: 539px;
-    width: 802px;
+    height: calc(100% - 46px);
+    width: 100%;
     pointer-events: none;
     overflow: hidden;
     z-index: 2;
@@ -106,10 +122,15 @@
     font-family: SimHei, "Microsoft JhengHei", Arial, Helvetica, sans-serif;
     text-shadow: rgb(0 0 0) 1px 0 1px, rgb(0 0 0) 0 1px 1px, rgb(0 0 0) 0 -1px 1px, rgb(0 0 0) -1px 0 1px;
     font-weight: bold;
-    animation: scroll 12s linear 1;
+}
+#main.normal>#video_wrapper>.danmaku_area>.danmaku {
+    animation: scroll-normal 12s linear 1;
+}
+#main.wide>#video_wrapper>.danmaku_area>.danmaku {
+    animation: scroll-wide 12s linear 1;
 }
 #video_wrapper.paused>.danmaku_area>.danmaku {
-    animation-play-state:paused;
+    animation-play-state: paused!important;
 }
 
 
@@ -126,7 +147,7 @@
 
 #video_wrapper>.controls>.process {
     height: 16px;
-    width: 778px;
+    width: calc(100% - 24px);
     cursor: pointer;
     position: absolute;
 }
@@ -450,6 +471,12 @@
     src: url(/statics/fonts/vanfont.woff);
 }
 
+#toolbar {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 3;
+    grid-row-end: 4;
+}
 #toolbar>.main {
     display: flex;
     padding: 16px 0 12px 0;
