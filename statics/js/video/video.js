@@ -1,6 +1,17 @@
+const video_id = parseInt(getQuery().id)
 const main = document.querySelector('#main')
 const video_wrapper = document.querySelector('#video_wrapper')
 const video = document.querySelector('video')
+const video_title = document.querySelector('#top>h1')
+const video_time = document.querySelector('#top>.time')
+const video_playNumber = document.querySelector('#top>.play_number')
+const video_danmakuNumber = document.querySelector('#top>.danmaku_number')
+const bottom_audienceNumber = document.querySelector('#video_wrapper>.bottom>.info>.audience_number')
+const bottom_danmakuNumber = document.querySelector('#video_wrapper>.bottom>.info>.danmaku_number')
+const toolbar_likes = document.querySelector('#toolbar>.main>.likes')
+const toolbar_coins = document.querySelector('#toolbar>.main>.coins')
+const toolbar_saves = document.querySelector('#toolbar>.main>.saves')
+const toolbar_shares = document.querySelector('#toolbar>.main>.shares')
 const controls_process = document.querySelector('#video_wrapper>.controls>.process')
 const controls_process_played = document.querySelector('#video_wrapper>.controls>.process>.played')
 const controls_process_icon = document.querySelector('#video_wrapper>.controls>.process>.icon')
@@ -130,7 +141,7 @@ function switchPlaySpeed() {
             video.playbackRate = 0.75
             controls_speed.textContent = '0.75x'
             break;
-        default: 
+        default:
             video.playbackRate = 1
             controls_speed.textContent = '倍速'
             break;
@@ -190,8 +201,40 @@ function formatDuration(duration) {
     }
     return `${min}:${sec}`
 }
+function getQuery() {
+    const query = window.location.search.substring(1).split('&').map(v => v.split('=')), json = {}
+    query.forEach(v => json[v[0]] = v[1])
+    return json
+}
+function initVideo() {
+    fetch('https://anonym.ink/api/video/video?video_id=' + video_id, {
+        method: 'GET'
+    })
+        .then(data => data.json())
+        .then(json => {
+            console.log(json)
+            if (!json.status) {
+                alert('加载出错：', json.data)
+                window.location.href = '/'
+                return
+            }
+            if (!json.data.danmaku) json.data.danmaku = []
+            video_title.textContent = json.data.title
+            video_time.textContent = json.data.time
+            video_playNumber.textContent = json.data.views
+            video_danmakuNumber.textContent = json.data.danmaku.length
+            bottom_danmakuNumber.textContent = json.data.danmaku.length
+            toolbar_likes.textContent = json.data.likes
+            toolbar_coins.textContent = json.data.coins
+            toolbar_saves.textContent = json.data.saves
+            toolbar_shares.textContent = json.data.shares
+            video.src = json.data.video
+            video.poster = json.data.cover
+        })
+}
 
 function init() {
+    initVideo()
     video.addEventListener('canplay', () => {
         controls_location.children[2].innerText = formatDuration(video.duration)
     })
