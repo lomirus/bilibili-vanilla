@@ -112,6 +112,7 @@ function createLabel(){
     newLabel.onclick = function () {
         label_list.removeChild(newLabel)
         updateLabelButton()
+        updateLabelPlaceholder()
     }
     return newLabel
 }
@@ -129,6 +130,9 @@ function updateLabelButton () {
         return
     }
     label_button.removeAttribute('disabled')
+}
+function updateLabelPlaceholder () {
+    label_input.placeholder = `还可添加${10 - label_list.children.length}个标签，点击已添加标签可将其删除`
 }
 function init() {
     main_channel.onchange = function () {
@@ -156,7 +160,9 @@ function init() {
     label_button.onclick = function () {
         let newLabel = createLabel()
         label_list.appendChild(newLabel)
+        label_input.value = ''
         updateLabelButton()
+        updateLabelPlaceholder()
     }
     upload_video.onchange = function () {
         let file = upload_video.files[0]
