@@ -21,6 +21,7 @@ const controls_speed = document.querySelector('#video_wrapper>.controls>.bottom>
 const controls_mute = document.querySelector('#video_wrapper>.controls>.bottom>.right>#mute')
 const controls_pip = document.querySelector('#video_wrapper>.controls>.bottom>.right>#pip')
 const controls_wide = document.querySelector('#video_wrapper>.controls>.bottom>.right>#wide')
+const controls_fullPage = document.querySelector('#video_wrapper>.controls>.bottom>.right>#fullPage')
 const danmaku_area = document.querySelector('#video_wrapper>.danmaku_area')
 const danmaku_switch = document.querySelector('#video_area>.bottom>.control>.switch')
 const danmaku_font_settings = document.querySelector('#video_area>.hover>.font_settings')
@@ -147,19 +148,67 @@ function switchPlaySpeed() {
             break;
     }
 }
-function switchWide() {
-    if (main.classList.contains('normal')) {
-        main.classList.remove('normal')
-        main.classList.add('wide')
+function switchVideoSize(size) {
+    function setWide() {
         controls_wide.src = '/statics/images/video/controls-wideExit.svg'
         controls_wide.title = '退出宽屏'
-    } else if (main.classList.contains('wide')) {
-        main.classList.remove('wide')
-        main.classList.add('normal')
+    }
+    function setFullPage() {
+        controls_fullPage.src = '/statics/images/video/controls-fullPageExit.svg'
+        controls_fullPage.title = '退出网页全屏'
+        document.documentElement.style.overflow = 'hidden'
+    }
+    function exitWide() {
         controls_wide.src = '/statics/images/video/controls-wide.svg'
         controls_wide.title = '宽屏模式'
     }
+    function exitFullPage() {
+        controls_fullPage.src = '/statics/images/video/controls-fullPage.svg'
+        controls_fullPage.title = '网页全屏'
+        document.documentElement.style.overflow = ''
+    }
     danmaku_area.innerHTML = ''
+    switch (main.getAttribute('class')) {
+        case 'normal':
+            switch (size) {
+                case 'wide':
+                    main.setAttribute('class', 'wide');
+                    setWide()
+                    exitFullPage()
+                    break;
+                case 'fullPage':
+                    main.setAttribute('class', 'fullPage');
+                    exitWide()
+                    setFullPage()
+                    break;
+            }; break;
+        case 'wide':
+            switch (size) {
+                case 'wide':
+                    main.setAttribute('class', 'normal');
+                    exitWide()
+                    exitFullPage()
+                    break;
+                case 'fullPage':
+                    main.setAttribute('class', 'fullPage');
+                    exitWide()
+                    setFullPage()
+                    break;
+            }; break;
+        case 'fullPage':
+            switch (size) {
+                case 'wide':
+                    main.setAttribute('class', 'wide');
+                    setWide()
+                    exitFullPage()
+                    break;
+                case 'fullPage':
+                    main.setAttribute('class', 'normal');
+                    exitWide()
+                    exitFullPage()
+                    break;
+            }; break;
+    }
 }
 function changeDanmakuType(type) {
     for (let i in danmaku_type) {
@@ -272,7 +321,8 @@ function init() {
     controls_speed.addEventListener('click', switchPlaySpeed)
     controls_mute.addEventListener('click', switchMuteStatus)
     controls_pip.addEventListener('click', switchPIPStatus)
-    controls_wide.addEventListener('click', switchWide)
+    controls_wide.addEventListener('click', () => switchVideoSize('wide'))
+    controls_fullPage.addEventListener('click', () => switchVideoSize('fullPage'))
     color_input.addEventListener('input', () => {
         color_input.value = color_input.value.toUpperCase()
         color_preview.style.backgroundColo = checkHex(color_input.value) ? color_input.value : 'rgba(0,0,0,0)';
