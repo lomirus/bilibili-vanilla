@@ -1,5 +1,6 @@
 let list = document.querySelector('section>.list')
 let rank = document.querySelector('section>.rank-list')
+let sections = document.querySelectorAll('#main>section')
 
 function loadList(list, data) {
     for (let i = 0; i < 8; i++) {
@@ -91,8 +92,10 @@ function test() {
         }
     ]
 
-    loadList(list, card_data)
-    loadRank(rank, rank_data)
+    sections.forEach(section => {
+        loadList(section.children[2], card_data)
+        loadRank(section.children[3], rank_data)
+    })
 }
 function pwa() {
     if ('serviceWorker' in navigator) {
