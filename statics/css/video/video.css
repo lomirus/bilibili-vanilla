@@ -110,6 +110,9 @@
     height: 100vh;
     z-index: 999;
 }
+.fullPage #video_area .danmaku {
+    animation: scroll-full 12s linear 1;
+}
 
 
 #video_wrapper {
@@ -132,6 +135,13 @@
 @keyframes scroll-wide {
     from {
         transform: translateX(1152px);
+    } to {
+        transform: translateX(-100%);
+    }
+}
+@keyframes scroll-full {
+    from {
+        transform: translateX(100vw);
     } to {
         transform: translateX(-100%);
     }
