@@ -21,7 +21,7 @@ body>header a .bilifont {
 
 #menu {
     display: grid;
-    grid-template-columns: 200px 748px 220px;
+    grid-template-columns: 200px 748px 221px;
     justify-content: space-between;
     margin: 20px 0;
 }
