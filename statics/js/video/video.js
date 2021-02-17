@@ -214,8 +214,7 @@ function initVideo() {
         .then(json => {
             console.log(json)
             if (!json.status) {
-                alert('加载出错：', json.data)
-                window.location.href = '/'
+                window.location.href = '/404/'
                 return
             }
             if (!json.data.danmaku) json.data.danmaku = []
