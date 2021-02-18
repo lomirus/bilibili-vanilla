@@ -99,10 +99,10 @@ function sendDanmaku() {
         .then(json => {
             if (json.status) {
                 new Danmaku({
-                    value: danmaku_input.value,
-                    color: color_input.value.substring(1),
-                    id: parseInt(Math.random * 10000000),
-                    type: chosen_danmaku_type
+                    Value: danmaku_input.value,
+                    Color: color_input.value.substring(1),
+                    Id: parseInt(Math.random * 10000000),
+                    Type: chosen_danmaku_type
                 })
             } else {
                 alert('发送失败：' + json.data)
