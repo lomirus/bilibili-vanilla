@@ -43,7 +43,7 @@ function checkNewPhone() {
         return false
     } else if (new_phone_input.value.match(/^\d+$/)) {
         new_phone_hint.textContent = ''
-        return 'phone'
+        return true
     } else {
         new_phone_hint.textContent = '新手机号格式无效'
         return false
