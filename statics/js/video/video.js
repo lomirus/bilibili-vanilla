@@ -59,8 +59,9 @@ class Danmaku {
             danmaku_area.removeChild(danmaku)
         }
     }
+    static lines = Math.floor((video_wrapper.offsetHeight - 44)/28) + 1
     static initTop() {
-        return Math.floor(Math.random() * 18) * 28 + "px"
+        return Math.floor(Math.random() * this.lines) * 28 + "px"
     }
     static initLeft() {
         return '0'
@@ -179,7 +180,6 @@ function switchVideoSize(size) {
     function exitFullScreen() {
         document.exitFullscreen()
     }
-    danmaku_area.innerHTML = ''
     switch (main.getAttribute('class')) {
         case 'normal':
             switch (size) {
@@ -242,6 +242,8 @@ function switchVideoSize(size) {
                     break;
             }; break;
     }
+    danmaku_area.innerHTML = ''
+    Danmaku.lines = Math.floor((video_wrapper.offsetHeight - 44)/28) + 1
 }
 function changeDanmakuType(type) {
     for (let i in danmaku_type) {
