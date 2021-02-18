@@ -296,10 +296,15 @@
     width: 216px;
     position: absolute;
     bottom: 0;
-    left: 250px;
     background: rgba(21,21,21,.9);
     border-radius: 2px;
     user-select: none;
+}
+.normal #video_area>.hover>.font_settings {
+    left: 250px;
+}
+.wide #video_area>.hover>.font_settings {
+    left: 353px;
 }
 #video_area>.hover>.font_settings>span {
     color: #fff;
