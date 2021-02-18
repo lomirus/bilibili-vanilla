@@ -374,6 +374,8 @@ function init() {
                 main.setAttribute('class', 'normal');
             }
         }
+        Danmaku.lines = Math.floor((video_wrapper.offsetHeight - 44) / 28) + 1
+        Danmaku.center = video_wrapper.offsetWidth / 2 + 'px'
     })
     video.addEventListener('canplay', () => {
         controls_location.children[2].innerText = formatDuration(video.duration)
