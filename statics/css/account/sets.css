@@ -9,6 +9,10 @@
     grid-row-gap: 20px;
 }
 
+#main>* {
+    position: relative;
+}
+
 #main input::-webkit-input-placeholder {
     color: #C0C4CC
 }
@@ -32,8 +36,8 @@ input {
 .verify_code button{
     height: 36px;
     width: 130px;
-    position: relative;
-    top: -38px;
+    position: absolute;
+    top: 2px;
     left: 288px;
 }
 
