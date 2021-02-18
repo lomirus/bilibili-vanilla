@@ -341,9 +341,9 @@ function init() {
     })
     video.addEventListener('timeupdate', () => {
         const ratio = video.currentTime / video.duration
-        controls_process_played.style.width = ratio * controls_process.offsetWidth + 'px'
+        controls_process_played.style.width = ratio * 100 + '%'
         controls_location.children[0].innerText = formatDuration(video.currentTime)
-        controls_process_icon.style.left = ratio * controls_process.offsetWidth - 11 + 'px' // ratio * 778 - (22/2) + 'px'
+        controls_process_icon.style.left = `calc(${ratio*100}% - 11px)`
     })
     video.addEventListener('enterpictureinpicture', () => controls_pip.title = '关闭画中画')
     video.addEventListener('leavepictureinpicture', () => controls_pip.title = '开启画中画')
