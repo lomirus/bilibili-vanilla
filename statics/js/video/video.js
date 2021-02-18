@@ -43,28 +43,34 @@ let chosen_danmaku_type = 'scroll'
 
 class Danmaku {
     constructor(v) {
-        if (v.type != 'scroll') {
-            alert('目前暂时只能发送滚动弹幕')
-            return
-        }
         let danmaku = document.createElement('div')
         danmaku.classList.add('danmaku')
+        danmaku.classList.add('danmaku-' + v.type)
         danmaku.innerText = v.value;
         danmaku.danmaku_id = v.id;
         danmaku.style.color = '#' + v.color;
-        danmaku.style.top = Danmaku.initTop()
-        danmaku.style.left = Danmaku.initLeft()
+        danmaku.style.top = Danmaku.initTop(v.type)
+        danmaku.style.left = Danmaku.initLeft(v.type)
         danmaku_area.appendChild(danmaku)
         danmaku.onanimationend = () => {
             danmaku_area.removeChild(danmaku)
         }
     }
     static lines = Math.floor((video_wrapper.offsetHeight - 44)/28) + 1
-    static initTop() {
-        return Math.floor(Math.random() * this.lines) * 28 + "px"
+    static center = video_wrapper.offsetWidth / 2 + 'px'
+    static initTop(type) {
+        if (type === 'scroll')
+            return Math.floor(Math.random() * this.lines) * 28 + "px"
+        else if (type === 'top')
+            return Math.floor(Math.random() * this.lines/2) * 28 + "px"
+        else
+            return Math.floor(Math.random() * this.lines/2) * 28 + Math.floor(this.lines/2) * 28 + "px"
     }
-    static initLeft() {
-        return '0'
+    static initLeft(type) {
+        if (type === 'scroll')
+            return '0'
+        else
+            return this.center
     }
 }
 
@@ -244,6 +250,7 @@ function switchVideoSize(size) {
     }
     danmaku_area.innerHTML = ''
     Danmaku.lines = Math.floor((video_wrapper.offsetHeight - 44)/28) + 1
+    Danmaku.center = video_wrapper.offsetWidth / 2 + 'px'
 }
 function changeDanmakuType(type) {
     for (let i in danmaku_type) {

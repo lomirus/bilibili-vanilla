@@ -86,7 +86,7 @@
     position: relative;
 }
 
-.normal #video_area .danmaku {
+.normal #video_area .danmaku-scroll {
     animation: scroll-normal 12s linear 1;
 }
 .normal #video_area>.bottom>.control>.send>.edit>input {
@@ -96,7 +96,7 @@
     grid-column-start: 1;
     grid-column-end: 3;
 }
-.wide #video_area .danmaku {
+.wide #video_area .danmaku-scroll {
     animation: scroll-wide 12s linear 1;
 }
 .wide #video_area>.bottom>.control>.send>.edit>input {
@@ -110,10 +110,10 @@
     height: 100vh;
     z-index: 999;
 }
-.fullPage #video_area .danmaku {
+.fullPage #video_area .danmaku-scroll {
     animation: scroll-full 12s linear 1;
 }
-.fullScreen #video_area .danmaku {
+.fullScreen #video_area .danmaku-scroll {
     animation: scroll-full 12s linear 1;
 }
 
@@ -160,6 +160,13 @@
         transform: translateX(-100%);
     }
 }
+@keyframes topOrBottom {
+    from {
+        transform: translateX(-50%);
+    } to {
+        transform: translateX(-50%);
+    }
+}
 #video_wrapper>.danmaku_area {
     position: absolute;
     height: 100%;
@@ -176,9 +183,14 @@
     text-shadow: rgb(0 0 0) 1px 0 1px, rgb(0 0 0) 0 1px 1px, rgb(0 0 0) 0 -1px 1px, rgb(0 0 0) -1px 0 1px;
     font-weight: bold;
 }
+#video_wrapper>.danmaku_area>.danmaku-top,
+#video_wrapper>.danmaku_area>.danmaku-bottom {
+    animation: topOrBottom 5s linear 1;
+}
 .paused .danmaku {
     animation-play-state: paused!important;
 }
+
 
 
 #video_wrapper>.controls {
