@@ -529,6 +529,10 @@
 #video_area>.bottom>.control>.send>button:hover {
     background-color: #00b5e5;
 }
+#video_area>.bottom>.control>.send>button:disabled {
+    background-color: #e7e7e7;
+    color: #999;
+}
 
 @font-face {
     font-family: "vanfont";

@@ -45,26 +45,26 @@ class Danmaku {
     constructor(v) {
         let danmaku = document.createElement('div')
         danmaku.classList.add('danmaku')
-        danmaku.classList.add('danmaku-' + v.type)
-        danmaku.innerText = v.value;
-        danmaku.danmaku_id = v.id;
-        danmaku.style.color = '#' + v.color;
-        danmaku.style.top = Danmaku.initTop(v.type)
-        danmaku.style.left = Danmaku.initLeft(v.type)
+        danmaku.classList.add('danmaku-' + v.Type)
+        danmaku.innerText = v.Value;
+        danmaku.danmaku_id = v.Id;
+        danmaku.style.color = '#' + v.Color;
+        danmaku.style.top = Danmaku.initTop(v.Type)
+        danmaku.style.left = Danmaku.initLeft(v.Type)
         danmaku_area.appendChild(danmaku)
         danmaku.onanimationend = () => {
             danmaku_area.removeChild(danmaku)
         }
     }
-    static lines = Math.floor((video_wrapper.offsetHeight - 44)/28) + 1
+    static lines = Math.floor((video_wrapper.offsetHeight - 44) / 28) + 1
     static center = video_wrapper.offsetWidth / 2 + 'px'
     static initTop(type) {
         if (type === 'scroll')
             return Math.floor(Math.random() * this.lines) * 28 + "px"
         else if (type === 'top')
-            return Math.floor(Math.random() * this.lines/2) * 28 + "px"
+            return Math.floor(Math.random() * this.lines / 2) * 28 + "px"
         else
-            return Math.floor(Math.random() * this.lines/2) * 28 + Math.floor(this.lines/2) * 28 + "px"
+            return Math.floor(Math.random() * this.lines / 2) * 28 + Math.floor(this.lines / 2) * 28 + "px"
     }
     static initLeft(type) {
         if (type === 'scroll')
@@ -74,6 +74,44 @@ class Danmaku {
     }
 }
 
+function sendDanmaku() {
+    if (user.token === '') {
+        alert('请先登录')
+        return
+    }
+    danmaku_send.setAttribute('disabled', 'disabled')
+    danmaku_send.textContent = '发送中'
+    fetch('https://anonym.ink/api/video/danmaku', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            token: user.token,
+            video_id: video_id,
+            value: danmaku_input.value,
+            color: color_input.value.substring(1),
+            type: chosen_danmaku_type,
+            location: Math.round(video.currentTime)
+        })
+    })
+        .then(data => data.json())
+        .then(json => {
+            if (json.status) {
+                new Danmaku({
+                    value: danmaku_input.value,
+                    color: color_input.value.substring(1),
+                    id: parseInt(Math.random * 10000000),
+                    type: chosen_danmaku_type
+                })
+            } else {
+                alert('发送失败：' + json.data)
+            }
+            danmaku_send.removeAttribute('disabled')
+            danmaku_send.textContent = '发送'
+        })
+
+}
 function loadRecommend(data) {
     data.forEach(v => {
         let section = document.createElement('section')
@@ -86,12 +124,12 @@ function loadRecommend(data) {
         recommend.appendChild(section)
     })
 }
-function loadDanmaku(data) {
+function loadDanmakus(danmakus) {
     video.addEventListener('timeupdate', () => {
-        data
-            .filter(v => Math.floor(video.currentTime) === v.location)
+        danmakus
+            .filter(v => Math.floor(video.currentTime) === v.Location)
             .forEach(v => {
-                if ([...danmaku_area.children].some(element => element.danmaku_id === v.id))
+                if ([...danmaku_area.children].some(element => element.danmaku_id === v.Id))
                     return;
                 new Danmaku(v);
             })
@@ -249,7 +287,7 @@ function switchVideoSize(size) {
             }; break;
     }
     danmaku_area.innerHTML = ''
-    Danmaku.lines = Math.floor((video_wrapper.offsetHeight - 44)/28) + 1
+    Danmaku.lines = Math.floor((video_wrapper.offsetHeight - 44) / 28) + 1
     Danmaku.center = video_wrapper.offsetWidth / 2 + 'px'
 }
 function changeDanmakuType(type) {
@@ -308,19 +346,20 @@ function initVideo() {
                 window.location.href = '/404/'
                 return
             }
-            if (!json.data.danmaku) json.data.danmaku = []
+            if (!json.data.danmakus) json.data.danmakus = []
             document.title = json.data.title + '_哔哩哔哩 (゜-゜)つロ 干杯~-bilibili'
             video_title.textContent = json.data.title
             video_time.textContent = json.data.time
             video_playNumber.textContent = json.data.views
-            video_danmakuNumber.textContent = json.data.danmaku.length
-            bottom_danmakuNumber.textContent = json.data.danmaku.length
+            video_danmakuNumber.textContent = json.data.danmakus.length
+            bottom_danmakuNumber.textContent = json.data.danmakus.length
             toolbar_likes.textContent = json.data.likes
             toolbar_coins.textContent = json.data.coins
             toolbar_saves.textContent = json.data.saves
             toolbar_shares.textContent = json.data.shares
             video.src = json.data.video
             video.poster = json.data.cover
+            loadDanmakus(json.data.danmakus)
         })
 }
 
@@ -352,7 +391,7 @@ function init() {
         const ratio = video.currentTime / video.duration
         controls_process_played.style.width = ratio * 100 + '%'
         controls_location.children[0].innerText = formatDuration(video.currentTime)
-        controls_process_icon.style.left = `calc(${ratio*100}% - 11px)`
+        controls_process_icon.style.left = `calc(${ratio * 100}% - 11px)`
     })
     video.addEventListener('enterpictureinpicture', () => controls_pip.title = '关闭画中画')
     video.addEventListener('leavepictureinpicture', () => controls_pip.title = '开启画中画')
@@ -362,14 +401,7 @@ function init() {
     danmaku_font_switch.addEventListener('mouseout', () => danmaku_font_settings.style.display = 'none')
     danmaku_font_settings.addEventListener('mouseover', () => danmaku_font_settings.style.display = 'block')
     danmaku_font_settings.addEventListener('mouseout', () => danmaku_font_settings.style.display = 'none')
-    danmaku_send.addEventListener('click', () => {
-        new Danmaku({
-            value:danmaku_input.value,
-            color: color_input.value.substring(1),
-            id: parseInt(Math.random * 10000000),
-            type: chosen_danmaku_type
-        })
-    })
+    danmaku_send.addEventListener('click', sendDanmaku)
     controls_process.addEventListener('click', e => {
         let player_ratio = e.offsetX / controls_process.offsetWidth
         video.currentTime = player_ratio * video.duration
@@ -442,55 +474,8 @@ function test() {
             danmaku_number: '0',
         }
     ]
-    let danmaku_data = [{
-        "id": 1,
-        "video_id": 1,
-        "user_id": 1,
-        "value": "第一",
-        "color": "FFFFFF",
-        "type": "scroll",
-        "time": "1970/1/1 00:00:00",
-        "location": 0,
-    }, {
-        "id": 2,
-        "video_id": 1,
-        "user_id": 1,
-        "value": "第二",
-        "color": "FF0000",
-        "type": "scroll",
-        "time": "1970/1/1 00:00:00",
-        "location": 2,
-    }, {
-        "id": 3,
-        "video_id": 1,
-        "user_id": 1,
-        "value": "第三",
-        "color": "000000",
-        "type": "scroll",
-        "time": "1970/1/1 00:00:00",
-        "location": 8,
-    }, {
-        "id": 4,
-        "video_id": 1,
-        "user_id": 1,
-        "value": "第四",
-        "color": "FFFFFF",
-        "type": "scroll",
-        "time": "1970/1/1 00:00:00",
-        "location": 8,
-    }, {
-        "id": 5,
-        "video_id": 1,
-        "user_id": 1,
-        "value": "第五",
-        "color": "FFFFFF",
-        "type": "scroll",
-        "time": "1970/1/1 00:00:00",
-        "location": 8,
-    }]
 
     loadRecommend(recommend_data)
-    loadDanmaku(danmaku_data)
 }
 
 init()
