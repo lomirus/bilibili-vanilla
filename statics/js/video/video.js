@@ -341,7 +341,7 @@ function initVideo() {
     })
         .then(data => data.json())
         .then(json => {
-            console.log(json)
+            console.log(json.data)
             if (!json.status) {
                 window.location.href = '/404/'
                 return

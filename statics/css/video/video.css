@@ -290,15 +290,17 @@
    position: relative;
     z-index: 3;
 }
-#video_area>.hover>.font_settings {
+#video_area>.hover>div {
     padding: 10px 20px;
     box-sizing: border-box;
-    width: 216px;
     position: absolute;
     bottom: 0;
     background: rgba(21,21,21,.9);
     border-radius: 2px;
     user-select: none;
+}
+#video_area>.hover>.font_settings {
+    width: 216px;
 }
 .normal #video_area>.hover>.font_settings {
     left: 250px;
@@ -306,11 +308,11 @@
 .wide #video_area>.hover>.font_settings {
     left: 353px;
 }
-#video_area>.hover>.font_settings>span {
+#video_area>.hover>div>span {
     color: #fff;
     font-size: 12px;
 }
-#video_area>.hover>.font_settings>div {
+#video_area>.hover>div>div {
     margin: 8px 0 10px 0;
 }
 #video_area>.hover>.font_settings>.type {
@@ -326,38 +328,77 @@
     flex-direction: column;
     cursor: pointer;
 }
-#video_area>.hover>.font_settings>.type>div:hover {
+#video_area>.hover>.danmaku_settings {
+    width: 298px;
+}
+#video_area>.hover>.danmaku_settings>.filter {
+    display: grid;
+    grid-template-columns: repeat(4, 26px);
+    grid-column-gap: 22px;
+    font-size: 12px;
+    color: rgba(255,255,255,.8);
+}
+#video_area>.hover>.danmaku_settings>.opacity>input {
+    width: 100%;
+}
+.normal #video_area>.hover>.danmaku_settings {
+    left: 170px;
+}
+.wide #video_area>.hover>.danmaku_settings {
+    left: 270px;
+}
+#video_area>.hover>.danmaku_settings>.filter>div {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    cursor: pointer;
+}
+#video_area>.hover>.font_settings>.type>div:hover,
+#video_area>.hover>.danmaku_settings>.filter>div:hover {
     color: #FFFFFF
 }
-#video_area>.hover>.font_settings>.type>div.chosen {
+#video_area>.hover>.font_settings>.type>div.chosen,
+#video_area>.hover>.danmaku_settings>.filter>div.chosen {
     color: #00A1D6
 }
-#video_area>.hover>.font_settings>.type>div.scroll>img {
-    content: url("/statics/images/video/scroll-type.svg");
+#video_area>.hover>.font_settings>.type>div.scroll>img,
+#video_area>.hover>.danmaku_settings>.filter>div.scroll>img {
+    content: url("/statics/images/video/type-scroll.svg");
 }
-#video_area>.hover>.font_settings>.type>div.scroll:hover>img {
-    content: url("/statics/images/video/scroll-type-hover.svg");
+#video_area>.hover>.font_settings>.type>div.scroll:hover>img,
+#video_area>.hover>.danmaku_settings>.filter>div.scroll:hover>img {
+    content: url("/statics/images/video/type-scroll-hover.svg");
 }
 #video_area>.hover>.font_settings>.type>div.scroll.chosen>img {
-    content: url("/statics/images/video/scroll-type-chosen.svg");
+    content: url("/statics/images/video/type-scroll-chosen.svg");
 }
-#video_area>.hover>.font_settings>.type>div.top>img {
-    content: url("/statics/images/video/scroll-type.svg");
+#video_area>.hover>.font_settings>.type>div.top>img,
+#video_area>.hover>.danmaku_settings>.filter>div.top>img {
+    content: url("/statics/images/video/type-top.svg");
 }
-#video_area>.hover>.font_settings>.type>div.top:hover>img {
-    content: url("/statics/images/video/scroll-type-hover.svg");
+#video_area>.hover>.font_settings>.type>div.top:hover>img,
+#video_area>.hover>.danmaku_settings>.filter>div.top:hover>img {
+    content: url("/statics/images/video/type-top-hover.svg");
 }
 #video_area>.hover>.font_settings>.type>div.top.chosen>img {
-    content: url("/statics/images/video/scroll-type-chosen.svg");
+    content: url("/statics/images/video/type-top-chosen.svg");
 }
-#video_area>.hover>.font_settings>.type>div.bottom>img {
-    content: url("/statics/images/video/scroll-type.svg");
+#video_area>.hover>.font_settings>.type>div.bottom>img,
+#video_area>.hover>.danmaku_settings>.filter>div.bottom>img {
+    content: url("/statics/images/video/type-bottom.svg");
 }
-#video_area>.hover>.font_settings>.type>div.bottom:hover>img {
-    content: url("/statics/images/video/scroll-type-hover.svg");
+#video_area>.hover>.font_settings>.type>div.bottom:hover>img,
+#video_area>.hover>.danmaku_settings>.filter>div.bottom:hover>img {
+    content: url("/statics/images/video/type-bottom-hover.svg");
 }
 #video_area>.hover>.font_settings>.type>div.bottom.chosen>img {
-    content: url("/statics/images/video/scroll-type-chosen.svg");
+    content: url("/statics/images/video/type-bottom-chosen.svg");
+}
+#video_area>.hover>.danmaku_settings>.filter>div.colorful>img {
+    content: url("/statics/images/video/type-colorful.svg");
+}
+#video_area>.hover>.danmaku_settings>.filter>div.colorful:hover>img {
+    content: url("/statics/images/video/type-colorful-hover.svg");
 }
 #video_area>.hover>.font_settings>.color>.edit {
     display: grid;
@@ -465,6 +506,9 @@
     align-items: center;
     margin-right: 8px;
     cursor: pointer;
+}
+#video_area>.bottom>.control>.settings>img:hover {
+    content: url("/statics/images/video/danmaku-settings-hover.svg");
 }
 #video_area>.bottom>.control>.send {
     display: flex;
