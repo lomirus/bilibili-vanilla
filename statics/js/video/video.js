@@ -361,6 +361,23 @@ function initVideo() {
             video.poster = json.data.cover
             loadDanmakus(json.data.danmakus)
         })
+    fetch('https://anonym.ink/api/video/view', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: jsonToQuery({
+            video_id: video_id
+        })
+    },)
+        .then(data => data.json())
+        .then(json => {
+            if (json.status) {
+                console.log('增加播放次数成功')
+            } else {
+                console.log('增加播放次数失败：' + json.data)
+            }
+        })
     if (user.token === '') return
     fetch('https://anonym.ink/api/video/like?video_id=' + video_id + '&token=' + user.token, {
         method: 'GET',
