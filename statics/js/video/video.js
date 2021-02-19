@@ -361,6 +361,22 @@ function initVideo() {
             video.poster = json.data.cover
             loadDanmakus(json.data.danmakus)
         })
+    if (user.token === '') return
+    fetch('https://anonym.ink/api/video/like?video_id=' + video_id + '&token=' + user.token, {
+        method: 'GET',
+    })
+        .then(data => data.json())
+        .then(json => {
+            if (json.status) {
+                if (json.data) {
+                    toolbar_likes.classList.add('done')
+                } else {
+                    toolbar_likes.classList.remove('done')
+                }
+            } else {
+                console.log('获取点赞状态失败：' + json.data)
+            }
+        })
 }
 
 function init() {
@@ -418,6 +434,40 @@ function init() {
     color_input.addEventListener('input', () => {
         color_input.value = color_input.value.toUpperCase()
         color_preview.style.backgroundColo = checkHex(color_input.value) ? color_input.value : 'rgba(0,0,0,0)';
+    })
+    toolbar_likes.addEventListener('click', () => {
+        if (user.token === '') {
+            alert('请先登录')
+            return
+        }
+        fetch('https://anonym.ink/api/video/like', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: jsonToQuery({
+                video_id: video_id,
+                token: user.token
+            })
+        })
+            .then(data => data.json())
+            .then(json => {
+                if (json.status) {
+                    if (json.data) {
+                        toolbar_likes.classList.add('done')
+                        toolbar_likes.textContent = parseInt(toolbar_likes.textContent) + 1
+                    } else {
+                        toolbar_likes.classList.remove('done')
+                        toolbar_likes.textContent = parseInt(toolbar_likes.textContent) - 1
+                    }
+                } else {
+                    if (toolbar_likes.classList.contains('done')) {
+                        alert('取消点赞失败：' + json.data)
+                    } else {
+                        alert('点赞失败：' + json.data)
+                    }
+                }
+            })
     })
     for (let i in danmaku_type)
         danmaku_type[i].addEventListener('click', () => changeDanmakuType(i));

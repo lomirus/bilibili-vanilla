@@ -561,11 +561,12 @@
     align-items: center;
     align-content: center;
 }
-
+#toolbar>.main>span.done {
+    color: #00A1D6;
+}
 #toolbar>.main>span:hover {
     color: #00A1D6;
 }
-
 #toolbar>.main>span::before {
     font-family: "vanfont";
     font-size: 28px;
