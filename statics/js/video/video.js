@@ -102,17 +102,19 @@ function sendDanmaku() {
             value: danmaku_input.value,
             color: color_input.value.substring(1),
             type: chosen_danmaku_type,
-            location: Math.round(video.currentTime)
+            location: Math.floor(video.currentTime)
         })
     })
         .then(data => data.json())
         .then(json => {
             if (json.status) {
-                new Danmaku({
-                    Value: danmaku_input.value,
-                    Color: color_input.value.substring(1),
-                    Id: parseInt(Math.random * 10000000),
-                    Type: chosen_danmaku_type
+                new Danmaku(json.data)
+                video.addEventListener('timeupdate', () => {
+                    if (Math.floor(video.currentTime) === json.data.Location) {
+                        if ([...danmaku_area.children].some(element => element.danmaku_id === json.data.Id))
+                            return;
+                        new Danmaku(json.data);
+                    }
                 })
             } else {
                 alert('发送失败：' + json.data)
