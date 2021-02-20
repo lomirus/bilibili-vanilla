@@ -432,6 +432,8 @@ function init() {
     danmaku_send.addEventListener('click', sendDanmaku)
     danmaku_opacity.addEventListener('input', () => {
         danmaku_area.style.opacity = 100 - danmaku_opacity.value + '%'
+        danmaku_opacity.style.background = 
+            `linear-gradient(90deg, #00A1D6 ${danmaku_opacity.value}%, #505050 ${danmaku_opacity.value}%)`
     })
     controls_process.addEventListener('click', e => {
         let player_ratio = e.offsetX / controls_process.offsetWidth
