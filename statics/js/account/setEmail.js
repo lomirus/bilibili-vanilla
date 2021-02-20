@@ -64,12 +64,32 @@ function checkNewCode() {
 
 old_code_button.onclick = function () {
     const type = checkOldAccount()
-    if (type === 'email') {
+    if (type === 'email' || type === 'phone') {
         old_code_button.setAttribute('disabled', 'disabled')
         old_code_button.textContent = '获取中...'
-    } else if (type === 'phone') {
-        old_code_button.setAttribute('disabled', 'disabled')
-        old_code_button.textContent = '获取中...'
+        const url = 'https://anonym.ink/api/verify/' + (type === 'email' ? 'email' : 'sms/general')
+        const bodyJson = type === 'email' ? {
+            email: old_account_input.value
+        } : {
+            phone: old_account_input.value
+        }
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                "Content-Type": 'application/x-www-form-urlencoded'
+            },
+            body: jsonToQuery(bodyJson)
+        })
+            .then(data => data.json())
+            .then(json => {
+                if (json.status) {
+                    old_code_button.textContent = '已获取'
+                } else {
+                    alert('验证码发送失败：' + json.data)
+                    old_code_button.removeAttribute('disabled')
+                    old_code_button.textContent = '点击获取'
+                }
+            })
     } else {
         console.log('账号格式无效')
     }
@@ -78,6 +98,25 @@ new_code_button.onclick = function () {
     if (checkNewEmail()) {
         new_code_button.setAttribute('disabled', 'disabled')
         new_code_button.textContent = '获取中...'
+        fetch('https://anonym.ink/api/verify/email', {
+            method: 'POST',
+            headers: {
+                "Content-Type": 'application/x-www-form-urlencoded'
+            },
+            body: jsonToQuery({
+                email: new_email_input.value
+            })
+        })
+            .then(data => data.json())
+            .then(json => {
+                if (json.status) {
+                    new_code_button.textContent = '已获取'
+                } else {
+                    alert('验证码发送失败：' + json.data)
+                    new_code_button.removeAttribute('disabled')
+                    new_code_button.textContent = '点击获取'
+                }
+            })
     } else {
         console.log('新邮箱格式无效')
     }
@@ -91,6 +130,30 @@ submit_button.onclick = function () {
     if (!ok) return;
     submit_button.setAttribute('disabled', 'disabled')
     submit_button.textContent = '提交中...'
+    fetch('https://anonym.ink/api/user/email', {
+        method: 'PUT',
+        headers: {
+            "Content-Type": 'application/x-www-form-urlencoded'
+        },
+        body: jsonToQuery({
+            old_account: old_account_input.value,
+            old_code: old_code_input.value,
+            new_email: new_email_input.value,
+            new_code: new_code_input.value,
+            token: user.token
+        })
+    })
+        .then(data => data.json())
+        .then(json => {
+            if (json.status) {
+                alert('修改成功')
+                window.location.href = '/account/setting'
+            } else {
+                alert('提交失败：' + json.data)
+                submit_button.removeAttribute('disabled')
+                submit_button.textContent = '提交'
+            }
+        })
 }
 
 old_account_input.oninput = checkOldAccount
