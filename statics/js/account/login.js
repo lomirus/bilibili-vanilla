@@ -99,9 +99,11 @@ function handleLoginRes(json) {
         if (remember_me.checked) {
             localStorage.setItem('token', json.token)
             localStorage.setItem('refreshToken', json.refreshToken)
+            localStorage.setItem('uid', json.data)
         } else {
             sessionStorage.setItem('token', json.token)
             sessionStorage.setItem('refreshToken', json.refreshToken)
+            sessionStorage.setItem('uid', json.data)
         }
         window.location.href = '/'
     } else {

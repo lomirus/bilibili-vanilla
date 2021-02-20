@@ -176,9 +176,11 @@ async function initToken() {
     if (localStorage.getItem('token')) {
         user.token = localStorage.getItem('token')
         user.refreshToken = localStorage.getItem('refreshToken')
+        user.uid = localStorage.getItem('uid')
     } else if (sessionStorage.getItem('token')) {
         user.token = sessionStorage.getItem('token')
         user.refreshToken = sessionStorage.getItem('refreshToken')
+        user.uid = sessionStorage.getItem('uid')
     }
     if (user.token !== '') {
         setInterval(refreshToken, 60000)
@@ -228,7 +230,7 @@ function checkIn() {
         })
 }
 function getInfo() {
-    return fetch('https://anonym.ink/api/user/info/self?token=' + user.token, {
+    return fetch('https://anonym.ink/api/user/info/' + user.uid, {
         method: 'GET'
     }).then(data => data.json())
 }
