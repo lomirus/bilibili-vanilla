@@ -132,7 +132,7 @@ submit_button.onclick = function () {
         .then(json => {
             if (json.status) {
                 alert('修改成功')
-                window.location.href = user.token === '' ? '/account/login' : '/'
+                window.location.href = user.token === '' ? '/account/login' : '/account/setting'
             } else {
                 alert('提交失败：' + json.data)
                 submit_button.removeAttribute('disabled')
