@@ -63,9 +63,47 @@ code_button.onclick = function () {
     if (type === 'email') {
         code_button.setAttribute('disabled', 'disabled')
         code_button.textContent = '获取中...'
+        fetch('https://anonym.ink/api/verify/email', {
+            method: 'POST',
+            headers: {
+                "Content-Type": 'application/x-www-form-urlencoded'
+            },
+            body: jsonToQuery({
+                email: account_input.value
+            })
+        })
+            .then(data => data.json())
+            .then(json => {
+                if (json.status) {
+                    code_button.textContent = '已获取'
+                } else {
+                    alert('验证码发送失败：' + json.data)
+                    code_button.removeAttribute('disabled')
+                    code_button.textContent = '点击获取'
+                }
+            })
     } else if (type === 'phone') {
         code_button.setAttribute('disabled', 'disabled')
         code_button.textContent = '获取中...'
+        fetch('https://anonym.ink/api/verify/sms/general', {
+            method: 'POST',
+            headers: {
+                "Content-Type": 'application/x-www-form-urlencoded'
+            },
+            body: jsonToQuery({
+                phone: account_input.value
+            })
+        })
+            .then(data => data.json())
+            .then(json => {
+                if (json.status) {
+                    code_button.textContent = '已获取'
+                } else {
+                    alert('验证码发送失败：' + json.data)
+                    code_button.removeAttribute('disabled')
+                    code_button.textContent = '点击获取'
+                }
+            })
     } else {
         console.log('账号格式无效')
     }
@@ -79,6 +117,28 @@ submit_button.onclick = function () {
     if (!ok) return;
     submit_button.setAttribute('disabled', 'disabled')
     submit_button.textContent = '提交中...'
+    fetch('https://anonym.ink/api/user/password', {
+        method: 'PUT',
+        headers: {
+            "Content-Type": 'application/x-www-form-urlencoded'
+        },
+        body: jsonToQuery({
+            account: account_input.value,
+            code: code_input.value,
+            new_password: newPassword_input.value
+        })
+    })
+        .then(data => data.json())
+        .then(json => {
+            if (json.status) {
+                alert('修改成功')
+                window.location.href = user.token === '' ? '/account/login' : '/'
+            } else {
+                alert('提交失败：' + json.data)
+                submit_button.removeAttribute('disabled')
+                submit_button.textContent = '提交'
+            }
+        })
 }
 
 account_input.oninput = checkAccount
