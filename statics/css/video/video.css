@@ -287,8 +287,10 @@
 }
 
 #video_area>.hover {
-   position: relative;
+    position: relative;
     z-index: 3;
+    color: #FFFFFF;
+    font-size: 12px;
 }
 #video_area>.hover>div {
     padding: 10px 20px;
@@ -299,132 +301,148 @@
     border-radius: 2px;
     user-select: none;
 }
-#video_area>.hover>.font_settings {
-    width: 216px;
-}
-.normal #video_area>.hover>.font_settings {
-    left: 250px;
-}
-.wide #video_area>.hover>.font_settings {
-    left: 353px;
-}
-#video_area>.hover>div>span {
-    color: #fff;
-    font-size: 12px;
-}
 #video_area>.hover>div>div {
     margin: 8px 0 10px 0;
 }
-#video_area>.hover>.font_settings>.type {
+.font_settings {
+    width: 216px;
+}
+.font_settings>.type {
     display: grid;
     grid-template-columns: repeat(3, 26px);
     grid-column-gap: 22px;
-    font-size: 12px;
     color: rgba(255,255,255,.8);
 }
-#video_area>.hover>.font_settings>.type>div {
+.font_settings>.type>div {
     display: flex;
     align-items: center;
     flex-direction: column;
     cursor: pointer;
 }
-#video_area>.hover>.danmaku_settings {
+.normal .font_settings {
+    left: 250px;
+}
+.wide .font_settings {
+    left: 353px;
+}
+.danmaku_settings {
     width: 298px;
 }
-#video_area>.hover>.danmaku_settings>.filter {
+.danmaku_settings>.filter {
     display: grid;
     grid-template-columns: repeat(4, 26px);
     grid-column-gap: 22px;
     font-size: 12px;
     color: rgba(255,255,255,.8);
 }
-#video_area>.hover>.danmaku_settings>.opacity>input {
+.danmaku_settings>.table {
+    display: grid;
+    grid-template-columns: 48px auto;
+    column-gap: 10px;
+}
+.danmaku_settings input[type="range"] {
     width: 100%;
+    appearance: none;
+    background: none;
 }
-.normal #video_area>.hover>.danmaku_settings {
-    left: 170px;
+.danmaku_settings input[type="range"]::-webkit-slider-thumb {
+    appearance: none;
+    height: 12px;
+    width: 12px;
+    border-radius: 6px;
+    top: -5px;
+    position: relative;
+    background-color: #00A1D6;
 }
-.wide #video_area>.hover>.danmaku_settings {
-    left: 270px;
+.danmaku_settings input[type="range"]::-webkit-slider-runnable-track {
+    appearance: none;
+    background-color: #00A1D6;
+    height: 2px;
 }
-#video_area>.hover>.danmaku_settings>.filter>div {
+.danmaku_settings>.filter>div {
     display: flex;
     align-items: center;
     flex-direction: column;
     cursor: pointer;
 }
-#video_area>.hover>.font_settings>.type>div:hover,
-#video_area>.hover>.danmaku_settings>.filter>div:hover {
+.normal .danmaku_settings {
+    left: 170px;
+}
+.wide .danmaku_settings {
+    left: 270px;
+}
+.font_settings>.type>div:hover,
+.danmaku_settings>.filter>div:hover {
     color: #FFFFFF
 }
-#video_area>.hover>.font_settings>.type>div.chosen,
-#video_area>.hover>.danmaku_settings>.filter>div.chosen {
+.font_settings>.type>div.chosen,
+.danmaku_settings>.filter>div.chosen {
     color: #00A1D6
 }
-#video_area>.hover>.font_settings>.type>div.scroll>img,
-#video_area>.hover>.danmaku_settings>.filter>div.scroll>img {
+.font_settings>.type>div.scroll>img,
+.danmaku_settings>.filter>div.scroll>img {
     content: url("/statics/images/video/type-scroll.svg");
 }
-#video_area>.hover>.font_settings>.type>div.scroll:hover>img,
-#video_area>.hover>.danmaku_settings>.filter>div.scroll:hover>img {
+.font_settings>.type>div.scroll:hover>img,
+.danmaku_settings>.filter>div.scroll:hover>img {
     content: url("/statics/images/video/type-scroll-hover.svg");
 }
 #video_area>.hover>.font_settings>.type>div.scroll.chosen>img {
     content: url("/statics/images/video/type-scroll-chosen.svg");
 }
-#video_area>.hover>.font_settings>.type>div.top>img,
-#video_area>.hover>.danmaku_settings>.filter>div.top>img {
+.font_settings>.type>div.top>img,
+.danmaku_settings>.filter>div.top>img {
     content: url("/statics/images/video/type-top.svg");
 }
-#video_area>.hover>.font_settings>.type>div.top:hover>img,
-#video_area>.hover>.danmaku_settings>.filter>div.top:hover>img {
+.font_settings>.type>div.top:hover>img,
+.danmaku_settings>.filter>div.top:hover>img {
     content: url("/statics/images/video/type-top-hover.svg");
 }
-#video_area>.hover>.font_settings>.type>div.top.chosen>img {
+.font_settings>.type>div.top.chosen>img {
     content: url("/statics/images/video/type-top-chosen.svg");
 }
-#video_area>.hover>.font_settings>.type>div.bottom>img,
-#video_area>.hover>.danmaku_settings>.filter>div.bottom>img {
+.font_settings>.type>div.bottom>img,
+.danmaku_settings>.filter>div.bottom>img {
     content: url("/statics/images/video/type-bottom.svg");
 }
-#video_area>.hover>.font_settings>.type>div.bottom:hover>img,
-#video_area>.hover>.danmaku_settings>.filter>div.bottom:hover>img {
+.font_settings>.type>div.bottom:hover>img,
+.danmaku_settings>.filter>div.bottom:hover>img {
     content: url("/statics/images/video/type-bottom-hover.svg");
 }
-#video_area>.hover>.font_settings>.type>div.bottom.chosen>img {
+.font_settings>.type>div.bottom.chosen>img {
     content: url("/statics/images/video/type-bottom-chosen.svg");
 }
-#video_area>.hover>.danmaku_settings>.filter>div.colorful>img {
+.danmaku_settings>.filter>div.colorful>img {
     content: url("/statics/images/video/type-colorful.svg");
 }
-#video_area>.hover>.danmaku_settings>.filter>div.colorful:hover>img {
+.danmaku_settings>.filter>div.colorful:hover>img {
     content: url("/statics/images/video/type-colorful-hover.svg");
 }
-#video_area>.hover>.font_settings>.color>.edit {
+.font_settings>.color>.edit {
     display: grid;
     grid-template-columns: 120px 50px;
     grid-template-rows: 22px;
     justify-content: space-between;
     margin-bottom: 6px;
 }
-#video_area>.hover>.font_settings>.color>.edit>input {
+.font_settings>.color>.edit>input {
     background-color: transparent;
     color: #fff;
     border: 1px solid rgba(255,255,255,.2);
     border-radius: 2px;
     padding: 4px 7px;
 }
-#video_area>.hover>.font_settings>.color>.edit>div {
+.font_settings>.color>.edit>div {
     border-radius: 2px;
 }
-#video_area>.hover>.font_settings>.color>.list {
+.font_settings>.color>.list {
     display: grid;
     grid-template-columns: repeat(7, 14px);
     grid-template-rows: repeat(2, 14px);
     grid-row-gap: 4px;
     justify-content: space-between;
 }
-#video_area>.hover>.font_settings>.color>.list>* {
+.font_settings>.color>.list>* {
     border-radius: 2px;
     cursor: pointer;
 }
