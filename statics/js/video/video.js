@@ -35,6 +35,12 @@ const danmaku_type = {
     'top': document.querySelector('.font_settings>.type>.top'),
     'bottom': document.querySelector('.font_settings>.type>.bottom'),
 }
+const danmaku_filter = {
+    'scroll': document.querySelector('.danmaku_settings>.filter>.scroll'),
+    'top': document.querySelector('.danmaku_settings>.filter>.top'),
+    'bottom': document.querySelector('.danmaku_settings>.filter>.bottom'),
+    'colorful': document.querySelector('.danmaku_settings>.filter>.colorful'),
+}
 const recommend = document.querySelector('#recommend')
 const color_input = document.querySelector('.font_settings>.color>.edit>input')
 const color_preview = document.querySelector('.font_settings>.color>.edit>div')
@@ -46,6 +52,7 @@ class Danmaku {
         let danmaku = document.createElement('div')
         danmaku.classList.add('danmaku')
         danmaku.classList.add('danmaku-' + v.Type)
+        if (v.Color !== 'FFFFFF') danmaku.classList.add('danmaku-colorful')
         danmaku.innerText = v.Value;
         danmaku.danmaku_id = v.Id;
         danmaku.style.color = '#' + v.Color;
@@ -201,90 +208,75 @@ function switchPlaySpeed() {
 }
 function switchVideoSize(size) {
     function setWide() {
+        main.classList.add('wide')
         controls_wide.src = '/statics/images/video/controls-wideExit.svg'
         controls_wide.title = '退出宽屏'
     }
     function setFullPage() {
+        main.classList.add('fullPage')
         controls_fullPage.src = '/statics/images/video/controls-fullPageExit.svg'
         controls_fullPage.title = '退出网页全屏'
         document.documentElement.style.overflow = 'hidden'
     }
     function exitWide() {
+        main.classList.remove('wide')
         controls_wide.src = '/statics/images/video/controls-wide.svg'
         controls_wide.title = '宽屏模式'
     }
     function exitFullPage() {
+        main.classList.remove('fullPage')
         controls_fullPage.src = '/statics/images/video/controls-fullPage.svg'
         controls_fullPage.title = '网页全屏'
         document.documentElement.style.overflow = ''
     }
     function setFullScreen() {
+        main.classList.add('fullScreen')
         video_wrapper.requestFullscreen()
     }
     function exitFullScreen() {
+        main.classList.remove('fullScreen')
         document.exitFullscreen()
     }
-    switch (main.getAttribute('class')) {
-        case 'normal':
-            switch (size) {
-                case 'wide':
-                    main.setAttribute('class', 'wide');
-                    setWide()
-                    break;
-                case 'fullPage':
-                    main.setAttribute('class', 'fullPage');
-                    setFullPage()
-                    break;
-                case 'fullScreen':
-                    main.setAttribute('class', 'fullScreen');
-                    setFullScreen()
-                    break;
-            }; break;
-        case 'wide':
-            exitWide()
-            switch (size) {
-                case 'wide':
-                    main.setAttribute('class', 'normal');
-                    break;
-                case 'fullPage':
-                    main.setAttribute('class', 'fullPage');
-                    setFullPage()
-                    break;
-                case 'fullScreen':
-                    main.setAttribute('class', 'fullScreen');
-                    setFullScreen()
-                    break;
-            }; break;
-        case 'fullPage':
-            exitFullPage()
-            switch (size) {
-                case 'wide':
-                    main.setAttribute('class', 'wide');
-                    setWide()
-                    break;
-                case 'fullPage':
-                    main.setAttribute('class', 'normal');
-                    break;
-                case 'fullScreen':
-                    main.setAttribute('class', 'fullScreen');
-                    setFullScreen()
-                    break;
-            }; break;
-        case 'fullScreen':
-            exitFullScreen()
-            switch (size) {
-                case 'wide':
-                    main.setAttribute('class', 'wide');
-                    setWide();
-                    break;
-                case 'fullPage':
-                    main.setAttribute('class', 'fullPage');
-                    setFullPage();
-                    break;
-                case 'fullScreen':
-                    main.setAttribute('class', 'normal');
-                    break;
-            }; break;
+    if (main.classList.contains('normal')) {
+        main.classList.remove('normal')
+        switch (size) {
+            case 'wide':
+                setWide(); break;
+            case 'fullPage':
+                setFullPage(); break;
+            case 'fullScreen':
+                setFullScreen(); break;
+        }
+    } else if (main.classList.contains('wide')) {
+        exitWide()
+        switch (size) {
+            case 'wide':
+                main.classList.add('normal'); break;
+            case 'fullPage':
+                setFullPage(); break;
+            case 'fullScreen':
+                setFullScreen(); break;
+        }
+    } else if (main.classList.contains('fullPage')) {
+        exitFullPage()
+        switch (size) {
+            case 'wide':
+                setWide(); break;
+            case 'fullPage':
+                main.classList.add('normal'); break;
+            case 'fullScreen':
+                setFullScreen(); break;
+        }
+    } else if (main.classList.contains('fullScreen')) {
+        exitFullScreen()
+        switch (size) {
+            case 'wide':
+                setWide(); break;
+            case 'fullPage':
+                setFullPage(); break;
+            case 'fullScreen':
+                main.classList.add('normal'); break;
+        }
     }
     danmaku_area.innerHTML = ''
     Danmaku.lines = Math.floor((video_wrapper.offsetHeight - 44) / 28) + 1
@@ -488,6 +480,16 @@ function init() {
     })
     for (let i in danmaku_type)
         danmaku_type[i].addEventListener('click', () => changeDanmakuType(i));
+    for (let i in danmaku_filter)
+        danmaku_filter[i].addEventListener('click', () => {
+            if (danmaku_filter[i].classList.contains('filter')) {
+                danmaku_filter[i].classList.remove('filter')
+                main.classList.remove('danmaku-filter-' + i)
+            } else {
+                danmaku_filter[i].classList.add('filter')
+                main.classList.add('danmaku-filter-' + i)
+            }
+        });
     for (let v of color_list)
         v.addEventListener('click', () => changeDanmakuColor(v.style.backgroundColor));
 }

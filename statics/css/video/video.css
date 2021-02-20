@@ -86,18 +86,12 @@
     position: relative;
 }
 
-.normal #video_area .danmaku-scroll {
-    animation: scroll-normal 12s linear 1;
-}
 .normal #video_area>.bottom>.control>.send>.edit>input {
     width: 280px;
 }
 .wide #video_area {
     grid-column-start: 1;
     grid-column-end: 3;
-}
-.wide #video_area .danmaku-scroll {
-    animation: scroll-wide 12s linear 1;
 }
 .wide #video_area>.bottom>.control>.send>.edit>input {
     width: 530px;
@@ -167,7 +161,25 @@
         transform: translateX(-50%);
     }
 }
-#video_wrapper>.danmaku_area {
+.normal .danmaku_area>.danmaku-scroll {
+    animation: scroll-normal 12s linear 1;
+}
+.wide .danmaku_area>.danmaku-scroll {
+    animation: scroll-wide 12s linear 1;
+}
+.danmaku-filter-scroll .danmaku_area>.danmaku-scroll {
+    visibility: hidden;
+}
+.danmaku-filter-top .danmaku_area>.danmaku-top {
+    visibility: hidden;
+}
+.danmaku-filter-bottom .danmaku_area>.danmaku-bottom {
+    visibility: hidden;
+}
+.danmaku-filter-colorful .danmaku_area>.danmaku-colorful {
+    visibility: hidden;
+}
+.danmaku_area {
     position: absolute;
     height: 100%;
     width: 100%;
@@ -176,21 +188,20 @@
     overflow: hidden;
     z-index: 2;
 }
-#video_wrapper>.danmaku_area>.danmaku {
+.danmaku_area>.danmaku {
     position: absolute;
     font-size: 25px;
     font-family: SimHei, "Microsoft JhengHei", Arial, Helvetica, sans-serif;
     text-shadow: rgb(0 0 0) 1px 0 1px, rgb(0 0 0) 0 1px 1px, rgb(0 0 0) 0 -1px 1px, rgb(0 0 0) -1px 0 1px;
     font-weight: bold;
 }
-#video_wrapper>.danmaku_area>.danmaku-top,
-#video_wrapper>.danmaku_area>.danmaku-bottom {
+.danmaku_area>.danmaku-top,
+.danmaku_area>.danmaku-bottom {
     animation: topOrBottom 5s linear 1;
 }
 .paused .danmaku {
     animation-play-state: paused!important;
 }
-
 
 
 #video_wrapper>.controls {
@@ -379,44 +390,51 @@
 .danmaku_settings>.filter>div.chosen {
     color: #00A1D6
 }
-.font_settings>.type>div.scroll>img,
-.danmaku_settings>.filter>div.scroll>img {
+#video_area div.scroll>img,
+#video_area div.scroll>img {
     content: url("/statics/images/video/type-scroll.svg");
 }
-.font_settings>.type>div.scroll:hover>img,
-.danmaku_settings>.filter>div.scroll:hover>img {
+#video_area div.scroll:hover>img {
     content: url("/statics/images/video/type-scroll-hover.svg");
 }
-#video_area>.hover>.font_settings>.type>div.scroll.chosen>img {
+#video_area div.scroll.chosen>img {
     content: url("/statics/images/video/type-scroll-chosen.svg");
 }
-.font_settings>.type>div.top>img,
-.danmaku_settings>.filter>div.top>img {
+#video_area div.scroll.filter>img {
+    content: url("/statics/images/video/type-scroll-filter.svg");
+}
+#video_area div.top>img {
     content: url("/statics/images/video/type-top.svg");
 }
-.font_settings>.type>div.top:hover>img,
-.danmaku_settings>.filter>div.top:hover>img {
+#video_area div.top:hover>img {
     content: url("/statics/images/video/type-top-hover.svg");
 }
-.font_settings>.type>div.top.chosen>img {
+#video_area div.top.chosen>img {
     content: url("/statics/images/video/type-top-chosen.svg");
 }
-.font_settings>.type>div.bottom>img,
-.danmaku_settings>.filter>div.bottom>img {
+#video_area div.top.filter>img {
+    content: url("/statics/images/video/type-top-filter.svg");
+}
+#video_area div.bottom>img {
     content: url("/statics/images/video/type-bottom.svg");
 }
-.font_settings>.type>div.bottom:hover>img,
-.danmaku_settings>.filter>div.bottom:hover>img {
+#video_area div.bottom:hover>img {
     content: url("/statics/images/video/type-bottom-hover.svg");
 }
-.font_settings>.type>div.bottom.chosen>img {
+#video_area div.bottom.chosen>img {
     content: url("/statics/images/video/type-bottom-chosen.svg");
 }
-.danmaku_settings>.filter>div.colorful>img {
+#video_area div.bottom.filter>img {
+    content: url("/statics/images/video/type-bottom-filter.svg");
+}
+#video_area div.colorful>img {
     content: url("/statics/images/video/type-colorful.svg");
 }
-.danmaku_settings>.filter>div.colorful:hover>img {
+#video_area div.colorful:hover>img {
     content: url("/statics/images/video/type-colorful-hover.svg");
+}
+#video_area div.colorful.filter>img {
+    content: url("/statics/images/video/type-colorful-filter.svg");
 }
 .font_settings>.color>.edit {
     display: grid;
