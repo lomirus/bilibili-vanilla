@@ -420,6 +420,7 @@ function init() {
         controls_play.setAttribute('src', '/statics/images/video/controls-play.svg')
     })
     video.addEventListener('timeupdate', () => {
+        if (video.currentTime === 0) danmaku_area.innerHTML = ''
         const ratio = video.currentTime / video.duration
         controls_process_played.style.width = ratio * 100 + '%'
         controls_location.children[0].innerText = formatDuration(video.currentTime)
