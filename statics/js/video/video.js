@@ -30,6 +30,7 @@ const danmaku_font_settings = document.querySelector('#video_area>.hover>.font_s
 const danmaku_font_switch = document.querySelector('#video_area>.bottom>.control>.send>.edit>div')
 const danmaku_send = document.querySelector('#video_area>.bottom>.control>.send button')
 const danmaku_input = document.querySelector('#video_area>.bottom>.control>.send input')
+const danmaku_opacity = document.querySelector('.danmaku_settings>.table>input')
 const danmaku_type = {
     'scroll': document.querySelector('.font_settings>.type>.scroll'),
     'top': document.querySelector('.font_settings>.type>.top'),
@@ -429,6 +430,9 @@ function init() {
     danmaku_font_settings.addEventListener('mouseover', () => danmaku_font_settings.style.display = 'block')
     danmaku_font_settings.addEventListener('mouseout', () => danmaku_font_settings.style.display = 'none')
     danmaku_send.addEventListener('click', sendDanmaku)
+    danmaku_opacity.addEventListener('input', () => {
+        danmaku_area.style.opacity = 100 - danmaku_opacity.value + '%'
+    })
     controls_process.addEventListener('click', e => {
         let player_ratio = e.offsetX / controls_process.offsetWidth
         video.currentTime = player_ratio * video.duration
