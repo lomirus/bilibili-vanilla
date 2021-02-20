@@ -366,7 +366,7 @@ function initVideo() {
         body: jsonToQuery({
             video_id: video_id
         })
-    },)
+    })
         .then(data => data.json())
         .then(json => {
             if (json.status) {
@@ -389,6 +389,21 @@ function initVideo() {
                 }
             } else {
                 console.log('获取点赞状态失败：' + json.data)
+            }
+        })
+    fetch('https://anonym.ink/api/video/coin?video_id=' + video_id + '&token=' + user.token, {
+        method: 'GET',
+    })
+        .then(data => data.json())
+        .then(json => {
+            if (json.status) {
+                if (json.data) {
+                    toolbar_coins.classList.add('done')
+                } else {
+                    toolbar_coins.classList.remove('done')
+                }
+            } else {
+                console.log('获取投币状态失败：' + json.data)
             }
         })
 }
@@ -441,7 +456,7 @@ function init() {
     danmaku_send.addEventListener('click', sendDanmaku)
     danmaku_opacity.addEventListener('input', () => {
         danmaku_area.style.opacity = 100 - danmaku_opacity.value + '%'
-        danmaku_opacity.style.background = 
+        danmaku_opacity.style.background =
             `linear-gradient(90deg, #00A1D6 ${danmaku_opacity.value}%, #505050 ${danmaku_opacity.value}%)`
     })
     controls_process.addEventListener('click', e => {
@@ -490,6 +505,33 @@ function init() {
                     } else {
                         alert('点赞失败：' + json.data)
                     }
+                }
+            })
+    })
+    toolbar_coins.addEventListener('click', () => {
+        if (user.token === '') {
+            alert('请先登录')
+            return
+        }
+        fetch('https://anonym.ink/api/video/coin', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: jsonToQuery({
+                video_id: video_id,
+                token: user.token
+            })
+        })
+            .then(data => data.json())
+            .then(json => {
+                if (json.status) {
+                    toolbar_coins.classList.add('done')
+                    if (json.data) {
+                        toolbar_coins.textContent = parseInt(toolbar_coins.textContent) + 1
+                    }
+                } else {
+                    alert('投币失败：' + json.data)
                 }
             })
     })
