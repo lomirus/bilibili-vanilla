@@ -537,9 +537,20 @@
     align-items: center;
     margin-right: 8px;
     cursor: pointer;
+    width: 30px;
+    height: 24px;
+    background-image: url(/statics/images/video/danmaku-settings.svg);
 }
-#video_area>.bottom>.control>.settings>img:hover {
-    content: url("/statics/images/video/danmaku-settings-hover.svg");
+#video_area>.bottom>.control>.settings:hover {
+    background-image: url("/statics/images/video/danmaku-settings-hover.svg");
+}
+#video_area>.bottom>.control>.settings:hover::before {
+    content: "";
+    position: relative;
+    display: block;
+    bottom: 16px;
+    height: 16px;
+    width: 72px;
 }
 #video_area>.bottom>.control>.send {
     display: flex;
