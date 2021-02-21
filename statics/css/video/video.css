@@ -630,19 +630,19 @@
     src: url(/statics/fonts/vanfont.woff);
 }
 
-#toolbar {
+#info {
     grid-column-start: 1;
     grid-column-end: 2;
     grid-row-start: 3;
     grid-row-end: 4;
 }
-#toolbar>.main {
+#info>.toolbar {
     display: flex;
     padding: 16px 0 12px 0;
     border-bottom: 1px solid #e5e9f0;
 }
 
-#toolbar>.main>span {
+#info>.toolbar>span {
     color: #757575;
     user-select: none;
     cursor: pointer;
@@ -652,29 +652,38 @@
     align-items: center;
     align-content: center;
 }
-#toolbar>.main>span.done {
+#info>.toolbar>span.done {
     color: #00A1D6;
 }
-#toolbar>.main>span:hover {
+#info>.toolbar>span:hover {
     color: #00A1D6;
 }
-#toolbar>.main>span::before {
+#info>.toolbar>span::before {
     font-family: "vanfont";
     font-size: 28px;
     margin-right: 6px;
 }
 
-#toolbar>.main>.likes::before {
+#info>.toolbar>.likes::before {
     content: "\E6E0"
 }
-#toolbar>.main>.coins::before {
+#info>.toolbar>.coins::before {
     content: "\E6E4"
 }
-#toolbar>.main>.saves::before {
+#info>.toolbar>.saves::before {
     content: "\E6E1"
 }
-#toolbar>.main>.shares::before {
+#info>.toolbar>.shares::before {
     content: "\E70F"
+}
+
+#info>.description {
+    margin-top: 16px;
+}
+#info>.description>p {
+    font-size: 12px;
+    color: #212121;
+    margin: 0;
 }
 
 #recommend>section {

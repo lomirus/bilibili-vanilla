@@ -13,10 +13,11 @@ const author_avatar = document.querySelector('#author>.avatar')
 const author_username = document.querySelector('#author>.username')
 const author_statement = document.querySelector('#author>.statement')
 const author_button = document.querySelector('#author>button')
-const toolbar_likes = document.querySelector('#toolbar>.main>.likes')
-const toolbar_coins = document.querySelector('#toolbar>.main>.coins')
-const toolbar_saves = document.querySelector('#toolbar>.main>.saves')
-const toolbar_shares = document.querySelector('#toolbar>.main>.shares')
+const toolbar_likes = document.querySelector('#info>.toolbar>.likes')
+const toolbar_coins = document.querySelector('#info>.toolbar>.coins')
+const toolbar_saves = document.querySelector('#info>.toolbar>.saves')
+const toolbar_shares = document.querySelector('#info>.toolbar>.shares')
+const info_description = document.querySelector('#info>.description>p')
 const controls_process = document.querySelector('#video_wrapper>.controls>.process')
 const controls_process_played = document.querySelector('#video_wrapper>.controls>.process>.played')
 const controls_process_icon = document.querySelector('#video_wrapper>.controls>.process>.icon')
@@ -358,6 +359,7 @@ function initVideo() {
             toolbar_coins.textContent = json.data.coins
             toolbar_saves.textContent = json.data.saves
             toolbar_shares.textContent = json.data.shares
+            info_description.textContent = json.data.description
             video.src = json.data.video
             video.poster = json.data.cover
             loadDanmakus(json.data.danmakus)
