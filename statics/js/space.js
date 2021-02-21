@@ -2,6 +2,8 @@ const up_avatar = document.querySelector('#banner>.left>img')
 const up_username = document.querySelector('#banner>.left>.userinfo>.username')
 const up_statement = document.querySelector('#banner>.left>.statement')
 const up_level = document.querySelector('#banner>.left>.userinfo>.level')
+const up_uid = document.querySelector('#home>.right>.info>.uid')
+const up_birthday = document.querySelector('#home>.right>.info>.birthday')
 const tab_home = document.querySelector('#tab_home')
 const tab_moments = document.querySelector('#tab_moments')
 const tab_post = document.querySelector('#tab_post')
@@ -36,11 +38,8 @@ function initUser() {
             up_username.textContent = json.data.Username
             up_statement.textContent = json.data.Statement
             up_level.setAttribute('lv', getLevel(json.data.Exp))
-            /*author_avatar.style.backgroundImage = `url(${json.data.Avatar})`
-            author_avatar.href = `/space/?id=${json.data.Uid}`
-            author_username.textContent = json.data.Username
-            author_username.href = `/space/?id=${json.data.Uid}`
-            author_statement.textContent = json.data.Statement*/
+            up_uid.textContent = json.data.Uid
+            up_birthday.textContent = json.data.Birthday === '9999-12-12' ? '未填写' : json.data.Birthday.substring(5)
         } else {
             alert('获取 UP 信息失败：' + json.data)
         }
