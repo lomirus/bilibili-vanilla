@@ -22,14 +22,6 @@ function getInitTabLeft() {
     }
 }
 
-function queryToJson() {
-    const queryStr = window.location.search.substring(1)
-    const json = {}
-    if (queryStr !== '') {
-        queryStr.split('&').map(v => v.split('=')).forEach(v => json[v[0]] = v[1])
-    }
-    return json
-}
 function initUser() {
     getUserInfo(queries.id).then(json => {
         if (json.status) {

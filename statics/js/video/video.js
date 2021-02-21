@@ -383,7 +383,7 @@ function initVideo() {
                 })
         })
         .catch(() => {
-            window.location.href = '/404/'
+            jumpTo404()
         })
     fetch('https://anonym.ink/api/video/view', {
         method: 'POST',

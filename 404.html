@@ -11,6 +11,10 @@
 
 <body>
     <script src="/statics/js/header.js"></script>
+    <script>
+        const url = queryToJson().url;
+        if(url) history.replaceState(null, null, url)
+    </script>
     <div id="main">
         <div>
             <img src="/statics/images/404.png">

@@ -171,6 +171,21 @@ function jsonToQuery(json) {
             .join('=')
     ).join('&')
 }
+function queryToJson() {
+    const queryStr = window.location.search.substring(1)
+    const json = {}
+    if (queryStr !== '') {
+        queryStr
+            .split('&')
+            .map(v => v.split('='))
+            .forEach(v =>
+                json[v[0]] = v[1]
+                    .replace(/%3D/g, '=')
+                    .replace(/%26/g, '&')
+            )
+    }
+    return json
+}
 
 async function initToken() {
     if (localStorage.getItem('token')) {
@@ -233,6 +248,11 @@ function getUserInfo(uid) {
     return fetch('https://anonym.ink/api/user/info/' + uid, {
         method: 'GET'
     }).then(data => data.json())
+}
+function jumpTo404() {
+    window.location.replace('/404.html?' + jsonToQuery({
+        url: window.location.href
+    }))
 }
 
 const tokenInit = initToken()
