@@ -38,65 +38,65 @@ header {
     margin: 0 20px
 }
 
-#banner>.left>#userinfo {
+#banner>.left>.userinfo {
     display: flex;
     padding-top: 10px;
     align-items: center;
 }
 
-#banner>.left>#userinfo>span {
+#banner>.left>.userinfo>span {
     margin-right: 5px;
 }
 
-#banner>.left>#userinfo #username {
+#banner>.left>.userinfo .username {
     color: #fff;
     font-weight: 700;
     font-size: 18px;
 }
 
-#banner>.left>#userinfo>.user_tag {
+#banner>.left>.userinfo>.user_tag {
     height: 16px;
     font-size: 12px;
     border-radius: 4px;
     color: #fff;
 }
 
-#banner>.left>#userinfo>.user_tag.level {
+#banner>.left>.userinfo>.user_tag.level {
     background-image: url(/statics/images/level.png);
     width: 28px;
 }
 
-#banner>.left>#userinfo>.level[lv="1"] {
+#banner>.left>.userinfo>.level[lv="1"] {
     background-position: -21px -46px;
 }
-#banner>.left>#userinfo>.level[lv="2"] {
+#banner>.left>.userinfo>.level[lv="2"] {
     background-position: -21px -82px;
 }
-#banner>.left>#userinfo>.level[lv="3"] {
+#banner>.left>.userinfo>.level[lv="3"] {
     background-position: -21px -118px;
 }
-#banner>.left>#userinfo>.level[lv="4"] {
+#banner>.left>.userinfo>.level[lv="4"] {
     background-position: -21px -154px;
 }
-#banner>.left>#userinfo>.level[lv="5"] {
+#banner>.left>.userinfo>.level[lv="5"] {
     background-position: -21px -190px;
 }
-#banner>.left>#userinfo>.level[lv="6"] {
+#banner>.left>.userinfo>.level[lv="6"] {
     background-position: -21px -226px;
 }
-#banner>.left>#userinfo>.level[lv="7"] {
+#banner>.left>.userinfo>.level[lv="7"] {
     background-position: -21px -262px;
 }
-#banner>.left>#userinfo>.level[lv="8"] {
+#banner>.left>.userinfo>.level[lv="8"] {
     background-position: -21px -298px;
 }
 
-#banner>.left>#userinfo .vip {
+#banner>.left>.userinfo .vip {
     padding: 0 5px;
     background-color: #f45a8d;
 }
 
-#banner>.left>#statement {
+#banner>.left>.statement {
     padding-top: 8px;
     color: #d6dee6;
     font-size: 12px;
