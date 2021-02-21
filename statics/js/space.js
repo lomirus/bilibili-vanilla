@@ -33,7 +33,7 @@ function initUser() {
             up_uid.textContent = json.data.Uid
             up_birthday.textContent = json.data.Birthday === '9999-12-12' ? '未填写' : json.data.Birthday.substring(5)
         } else {
-            alert('获取 UP 信息失败：' + json.data)
+            jumpTo404()
         }
     })
 }
