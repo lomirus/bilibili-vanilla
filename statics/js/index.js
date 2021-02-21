@@ -6,9 +6,9 @@ function loadList(list, data) {
     for (let i = 0; i < 8; i++) {
         let article = document.createElement('article')
         article.innerHTML =
-            `<a class="cover" href="/video/114514" target="_blank"><img src="${data[i].cover}"></a>` +
-            `<a class="title" href="/video/114514" target="_blank">${data[i].title}</a>` +
-            `<a class="author" href="/space/114514" target="_blank">${data[i].author}</a>`
+            `<a class="cover" href="/video/?id=1" target="_blank"><img src="${data[i].cover}"></a>` +
+            `<a class="title" href="/video/?id=1" target="_blank">${data[i].title}</a>` +
+            `<a class="author" href="/space/?id=1" target="_blank">${data[i].author}</a>`
         list.appendChild(article)
     }
 }
