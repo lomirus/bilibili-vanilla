@@ -185,12 +185,60 @@ section>.list>article {
     flex-direction: column;
 }
 section>.list>article>.cover {
+    position: relative;
     height: 116px;
 }
 section>.list>article>.cover>img {
     width: 100%;
     height: 100%;
     border-radius: 2px;
+}
+section>.list>article>.cover>.info {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    height: 28px;
+    padding: 6px 8px;
+    bottom: 0;
+    width: 100%;
+    box-sizing: border-box;
+    z-index: 1;
+}
+section>.list>article>.cover>.info::before {
+    position: absolute;
+    content: "";
+    background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), transparent);
+    width: 100%;
+    left: 0;
+    height: 48px;
+    bottom: 0;
+    z-index: -1;
+}
+section>.list>article>.cover>.info>span {
+    color: #FFFFFF;
+    font-size: 12px;
+}
+section>.list>article>.cover>.info>.views,
+section>.list>article>.cover>.info>.likes {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+}
+section>.list>article>.cover>.info>.views::before,
+section>.list>article>.cover>.info>.likes::before {
+    font-family: bilifont;
+    margin-right: 4px;
+    font-size: 16px;
+}
+section>.list>article>.cover>.info>.views::before {
+    content: "\E73E";
+}
+section>.list>article>.cover>.info>.likes::before {
+    content: "\E740";
+}
+section>.list>article>.cover>.info>.length {
+    position: absolute;
+    right: 8px;
 }
 section>.list>article>.title, section>.list>article>.author {
      display: block;

@@ -204,7 +204,7 @@ header {
 #home>.left {
     width: 880px;
     float: left;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
 }
 #home #video_title{
     display: flex;
