@@ -46,17 +46,22 @@
     grid-template-columns: 48px 256px;
     grid-template-rows: 20px 20px 32px;
 }
-#author img {
+#author .avatar {
     width: 48px;
     height: 48px;
     border-radius: 50%;
     grid-row-start: 1;
     grid-row-end: 4;
+    background-size: cover;
 }
 #author .username{
     margin: 0 0 4px 0;
     font-size: 14px;
     color: #212121;
+    transition: color .3s;
+}
+#author .username:hover {
+    color: #00A1D6;
 }
 #author .statement{
     margin: 0 0 5px 0;

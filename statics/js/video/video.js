@@ -9,6 +9,10 @@ const video_playNumber = document.querySelector('#top>.play_number')
 const video_danmakuNumber = document.querySelector('#top>.danmaku_number')
 const bottom_audienceNumber = document.querySelector('#video_area>.bottom>.info>.audience_number')
 const bottom_danmakuNumber = document.querySelector('#video_area>.bottom>.info>.danmaku_number')
+const author_avatar = document.querySelector('#author>.avatar')
+const author_username = document.querySelector('#author>.username')
+const author_statement = document.querySelector('#author>.statement')
+const author_button = document.querySelector('#author>button')
 const toolbar_likes = document.querySelector('#toolbar>.main>.likes')
 const toolbar_coins = document.querySelector('#toolbar>.main>.coins')
 const toolbar_saves = document.querySelector('#toolbar>.main>.saves')
@@ -337,10 +341,10 @@ function initVideo() {
         method: 'GET'
     })
         .then(data => data.json())
-        .then(json => {
-            console.log(json.data)
+        .then(json => new Promise((resolve, reject) => {
+            console.log('Video: ', json.data)
             if (!json.status) {
-                window.location.href = '/404/'
+                reject()
                 return
             }
             if (!json.data.danmakus) json.data.danmakus = []
@@ -357,6 +361,27 @@ function initVideo() {
             video.src = json.data.video
             video.poster = json.data.cover
             loadDanmakus(json.data.danmakus)
+            resolve(json.data.author)
+        }))
+        .then(uid => {
+            console.log('uid', uid)
+            fetch('https://anonym.ink/api/user/info/' + uid)
+                .then(data => data.json())
+                .then(json => {
+                    if (json.status) {
+                        console.log('UP: ', json.data)
+                        author_avatar.style.backgroundImage = `url(${json.data.Avatar})`
+                        author_avatar.href = `/space/?id=${json.data.Uid}`
+                        author_username.textContent = json.data.Username
+                        author_username.href = `/space/?id=${json.data.Uid}`
+                        author_statement.textContent = json.data.Statement
+                    } else {
+                        alert('获取UP信息失败：' + json.data)
+                    }
+                })
+        })
+        .catch(() => {
+            window.location.href = '/404/'
         })
     fetch('https://anonym.ink/api/video/view', {
         method: 'POST',

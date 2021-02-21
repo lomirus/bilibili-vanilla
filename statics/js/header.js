@@ -186,7 +186,7 @@ async function initToken() {
         setInterval(refreshToken, 60000)
         await refreshToken()
         await checkIn()
-        const res = await getInfo()
+        const res = await getUserInfo(user.uid)
         if (!res.status) {
             console.log('Failed to get info: ', res.data)
             return
@@ -229,8 +229,8 @@ function checkIn() {
             }
         })
 }
-function getInfo() {
-    return fetch('https://anonym.ink/api/user/info/' + user.uid, {
+function getUserInfo(uid) {
+    return fetch('https://anonym.ink/api/user/info/' + uid, {
         method: 'GET'
     }).then(data => data.json())
 }
