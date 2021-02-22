@@ -310,6 +310,11 @@ header {
     line-height: 20px;
     height: 38px;
     overflow: hidden;
+    color: #222;
+    transition: color .2s ease;
+}
+#home #video_wrapper>section>.title:hover {
+    color: #00A1D6;
 }
 #home #video_wrapper>section>.views,
 #home #video_wrapper>section>.time {

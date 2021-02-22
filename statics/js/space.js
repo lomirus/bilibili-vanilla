@@ -26,11 +26,11 @@ function loadVideos(data) {
     data.forEach((v,i) => {
         let section = document.createElement('section')
         section.innerHTML =
-            `<a class="cover">
+            `<a class="cover" href="/video/?id=${v.Id}">
                 <img src="${v.Cover}">
                 <span class="length">${v.Length}</span>
             </a>
-            <a class="title">
+            <a class="title" href="/video/?id=${v.Id}">
                 <span>${v.Title}</span>
             </a>
             <span class="views">${v.Views}</span>
