@@ -786,16 +786,19 @@
 }
 #comment>.comment-box {
     display: flex;
-    align-items: center;
 }
 #comment>.comment-box>img {
-    margin-left: 5px;
+    margin: 7px 32px 0 5px;
     width: 48px;
     height: 48px;
     border-radius: 50%;
 }
-#comment>.comment-box>textarea {
-    margin-left: 32px;
+#comment>.comment-box>.right {
+    display: flex;
+    padding-bottom: 30px;
+    border-bottom: 1px solid #e5e9ef;
+}
+#comment>.comment-box>.right>textarea {
     margin-right: 10px;
     padding: 5px 10px;
     background-color: #f4f5f7;
@@ -807,7 +810,7 @@
     color: #555;
     font-size: 12px;
 }
-#comment>.comment-box>button {
+#comment>.comment-box>.right>button {
     background-color: #00a1d6;
     width: 70px;
     height: 64px;
@@ -818,6 +821,60 @@
     transition: .1s;
     cursor: pointer;
 }
-#comment>.comment-box>button:hover {
+#comment>.comment-box>.right>button:hover {
     background-color: #00b5e5;
+}
+#comment>.comments>section {
+    display: flex;
+}
+#comment>.comments>section>.avatar {
+    background-image: url("https://redrock.oss-cn-chengdu.aliyuncs.com/1.png");
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: block;
+    background-size: cover;
+    margin: 24px 32px 0 5px;
+}
+#comment>.comments>section>.right {
+    border-bottom: 1px solid #e5e9ef;
+    padding: 22px 0 14px 0;
+    width: 717px;
+}
+#comment>.comments>section .user_info {
+    color: #6d757a;
+    font-size: 12px;
+    margin-bottom: 6px;
+}
+#comment>.comments>section .user_info>.username {
+    color: #6d757a;
+    font-size: 12px;
+    font-weight: bold;
+    margin-right: 8px;
+}
+#comment>.comments>section .user_info>.level {
+    background: url("/statics/images/level.png");
+    display: inline-block;
+    width: 19px;
+    height: 9px;
+    background-position-x: -80px;
+    background-position-y: -157px;
+}
+#comment>.comments>section .content {
+    margin: 0 0 2px 0;
+    font-size: 14px;
+}
+#comment>.comments>section .comment_info {
+    color: #99a2aa;
+    font-size: 12px;
+    line-height: 26px;
+}
+#comment>.comments>section .like {
+
+}
+#comment>.comments>section .comment_info {
+
+}
+#comment>.comments>section .comment_info {
+
 }
