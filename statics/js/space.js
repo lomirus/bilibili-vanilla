@@ -8,6 +8,7 @@ const tab_home = document.querySelector('#tab_home')
 const tab_moments = document.querySelector('#tab_moments')
 const tab_post = document.querySelector('#tab_post')
 const tab_underline = document.querySelector('#tab_underline')
+const video_wrapper = document.querySelector('#video_wrapper')
 const queries = queryToJson()
 
 function moveUnderline(left = getInitTabLeft()) {
@@ -21,6 +22,40 @@ function getInitTabLeft() {
         default: return '15px';
     }
 }
+function loadVideos(data) {
+    data.forEach((v,i) => {
+        let section = document.createElement('section')
+        section.innerHTML =
+            `<a class="cover">
+                <img src="${v.Cover}">
+                <span class="length">${v.Length}</span>
+            </a>
+            <a class="title">
+                <span>${v.Title}</span>
+            </a>
+            <span class="views">${v.Views}</span>
+            <span class="time">${formatDate(v.Time)}</span>`
+        video_wrapper.appendChild(section)
+    })
+}
+function formatDate(time) {
+    let theDate = new Date(time)
+    let nowDate = new Date()
+    let difference = nowDate.getTime() - theDate.getTime()
+    if (difference < 60000) {
+        return Math.floor(difference / 1000) + '秒前'
+    } else if (difference < 3600000) {
+        return Math.floor(difference / 60000) + '分钟前'
+    } else if (difference < 86400000) {
+        return Math.floor(difference / 3600000) + '小时前'
+    } else if (difference < 172800000) {
+        return '昨天'
+    } else if (theDate.getFullYear() === nowDate.getFullYear()){
+        return `${theDate.getMonth() + 1}-${theDate.getDate()}`
+    } else {
+        return `${theDate.getFullYear()}-${theDate.getMonth() + 1}-${theDate.getDate()}`
+    }
+}
 
 function initUser() {
     getUserInfo(queries.id).then(json => {
@@ -32,6 +67,7 @@ function initUser() {
             up_level.setAttribute('lv', getLevel(json.data.Exp))
             up_uid.textContent = json.data.Uid
             up_birthday.textContent = json.data.Birthday === '9999-12-12' ? '未填写' : json.data.Birthday.substring(5)
+            loadVideos(json.data.Videos)
         } else {
             jumpTo404()
         }

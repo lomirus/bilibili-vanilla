@@ -268,7 +268,7 @@ header {
 
 #home #video_wrapper {
     display: grid;
-    grid-template-columns: repeat(5, auto);
+    grid-template-columns: repeat(5, 1fr);
     column-gap: 20px;
     row-gap: 20px;
     margin-bottom: 5px;
@@ -289,6 +289,10 @@ header {
     overflow: hidden;
     position: relative;
 }
+#home #video_wrapper>section>.cover>img {
+    width: 100%;
+    height: 100%;
+}
 #home #video_wrapper>section>.cover>.length {
     position: absolute;
     background: rgba(0,0,0,.5);
@@ -304,6 +308,8 @@ header {
     grid-column-start: 1;
     grid-column-end: 3;
     line-height: 20px;
+    height: 38px;
+    overflow: hidden;
 }
 #home #video_wrapper>section>.views,
 #home #video_wrapper>section>.time {
