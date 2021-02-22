@@ -63,6 +63,7 @@ function initUser() {
     getUserInfo(queries.id).then(json => {
         if (json.status) {
             console.log('UP: ', json.data)
+            document.title = json.data.Username + '的个人空间 - ビリビリ ( ゜- ゜)つロ 乾杯~ Bilibili'
             up_avatar.src = json.data.Avatar
             up_username.textContent = json.data.Username
             up_statement.textContent = json.data.Statement
