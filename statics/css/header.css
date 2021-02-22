@@ -129,6 +129,7 @@ body>header>.hover>.user>.avatar {
     border-radius: 50%;
     top: -35px;
     left: 105px;
+    background-size: cover;
     cursor: pointer;
 }
 body>header>.hover>.user>.username {

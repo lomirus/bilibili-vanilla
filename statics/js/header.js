@@ -44,7 +44,7 @@ function renderHeader() {
             ${logged ?
                 `<div class="hover">
                     <div class="user" style="visibility: hidden;opacity: 0;">
-                        <img class="avatar">
+                        <a class="avatar"><img></a>
                         <span class="username">admin</span>
                         <div class="level_content">
                             <div class="info">
@@ -113,7 +113,8 @@ function initUserHover() {
     }
     const info = user.data
     pre_avatar.src = info.Avatar
-    uh_avatar.src = info.Avatar
+    uh_avatar.style.backgroundImage = `url(${info.Avatar})`
+    uh_avatar.href = `/space/?id=${info.Uid}`
     uh_username.innerText = info.Username
     uh_level.innerText = '等级 ' + getLevel(info.Exp)
     uh_exp.innerText = info.Exp + ' / ' + getMaxExp(info.Exp)
