@@ -416,7 +416,6 @@ function initVideo() {
                     if (json.status) {
                         console.log('UP: ', json.data)
                         author_avatar.style.backgroundImage = `url(${json.data.Avatar})`
-                        comment_avatar.src = json.data.Avatar
                         author_avatar.href = `/space/?id=${json.data.Uid}`
                         author_username.textContent = json.data.Username
                         author_username.href = `/space/?id=${json.data.Uid}`
@@ -682,3 +681,4 @@ function init() {
 }
 
 init()
+tokenInit.then(() => comment_avatar.src = user.data.Avatar)
