@@ -173,15 +173,15 @@ function loadTags(tags) {
 function loadComment(commentData, userData) {
     let section = document.createElement('section')
     section.innerHTML =
-        `<a class="avatar" style="background: url(\"${userData.Avatar}\");"></a>
+        `<a class="avatar" style="background-image: url(${userData.Avatar});"></a>
         <div class="right">
             <div class="user_info">
-                <span class="username">陈睿</span>
+                <span class="username">${userData.Username}</span>
                 <span class="level"></span>
             </div>
-            <p class="content">asdasd</p>
+            <p class="content">${commentData.Value}</p>
             <div class="comment_info">
-                <span class="time">2021-02-20 09:57</span>
+                <span class="time">${commentData.Time}</span>
                 <span class="like"></span>
                 <span class="hate"></span>
             </div>
@@ -621,6 +621,37 @@ function init() {
                     alert('投币失败：' + json.data)
                 }
             })
+    })
+    comment_button.addEventListener('click', () => {
+        if (user.token === '') {
+            alert('请先登录')
+            return
+        }
+        comment_button.setAttribute('disabled', 'disabled')
+        comment_button.textContent = '提交中...'
+        fetch('https://anonym.ink/api/video/comment', {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/x-www-form-urlencoded'
+            },
+            body: jsonToQuery({
+                token: user.token,
+                video_id: video_id,
+                comment: comment_input.value
+            })
+        })
+            .then(data => data.json())
+            .then(json => {
+                comment_button.removeAttribute('disabled')
+                comment_button.textContent = '发表评论'
+                if (json.status) {
+                    alert('评论成功！')
+                    loadComment(json.data, user.data)
+                } else {
+                    alert('评论失败：' + json.data)
+                }
+            })
+        console.log(comment_input.value)
     })
     for (let i in danmaku_type)
         danmaku_type[i].addEventListener('click', () => changeDanmakuType(i));
