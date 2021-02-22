@@ -57,6 +57,7 @@ const color_list = document.querySelector('.font_settings>.color>.list').childre
 const comment_avatar = document.querySelector('#comment>.comment-box img')
 const comment_input = document.querySelector('#comment>.comment-box textarea')
 const comment_button = document.querySelector('#comment>.comment-box button')
+const comment_count = document.querySelector('#comment>.count')
 const comment_comments = document.querySelector('#comment>.comments')
 let chosen_danmaku_type = 'scroll'
 
@@ -192,7 +193,6 @@ function loadComment(commentData, userData) {
         comment_comments.insertBefore(section, comment_comments.children[0])
 }
 function loadComments(data) {
-    if (data === null) return
     data.forEach(v => loadComment(v, v.User))
 }
 function switchVideoPlayStatus() {
@@ -499,7 +499,12 @@ function initVideo() {
         .then(data => data.json())
         .then(json => {
             if (json.status) {
-                loadComments(json.data)
+                if (json.data === null) {
+                    comment_count.textContent = '0'
+                } else {
+                    comment_count.textContent = json.data.length
+                    loadComments(json.data)
+                }
             } else {
                 console.log("加载评论失败：", json.data)
             }
