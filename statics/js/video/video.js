@@ -18,6 +18,7 @@ const toolbar_coins = document.querySelector('#info>.toolbar>.coins')
 const toolbar_saves = document.querySelector('#info>.toolbar>.saves')
 const toolbar_shares = document.querySelector('#info>.toolbar>.shares')
 const info_description = document.querySelector('#info>.description>p')
+const info_tags = document.querySelector('#info>.tags')
 const controls_process = document.querySelector('#video_wrapper>.controls>.process')
 const controls_process_played = document.querySelector('#video_wrapper>.controls>.process>.played')
 const controls_process_icon = document.querySelector('#video_wrapper>.controls>.process>.icon')
@@ -156,6 +157,13 @@ function loadDanmakus(danmakus) {
                     return;
                 new Danmaku(v);
             })
+    })
+}
+function loadTags(tags) {
+    tags.forEach(v => {
+        let span = document.createElement('span')
+        span.textContent = v
+        info_tags.appendChild(span)
     })
 }
 function switchVideoPlayStatus() {
@@ -369,6 +377,7 @@ function initVideo() {
             video.src = json.data.Video
             video.poster = json.data.Cover
             loadDanmakus(json.data.Danmakus)
+            loadTags(json.data.Label)
             resolve(json.data.Author)
         }))
         .then(uid => {
