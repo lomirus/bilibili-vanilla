@@ -564,6 +564,7 @@ function init() {
                 if (json.status) {
                     toolbar_coins.classList.add('done')
                     if (json.data) {
+                        alert('投币成功！')
                         toolbar_coins.textContent = parseInt(toolbar_coins.textContent) + 1
                     }
                 } else {
