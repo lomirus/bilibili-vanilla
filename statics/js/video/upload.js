@@ -1,4 +1,4 @@
-let channel_data = [
+const channel_data = [
     { 'id': '0101', 'main': '生活', 'sub': '日常', 'description': '一般日常向的生活类视频' },
     { 'id': '0102', 'main': '生活', 'sub': '搞笑', 'description': '搞笑挑战、剪辑、表演、配音以及各类日常沙雕视频' },
     { 'id': '0103', 'main': '生活', 'sub': '运动', 'description': '一般向运动项目以及惊险刺激的户外极限运动' },
@@ -138,8 +138,88 @@ function updateLabelButton () {
     }
     label_button.removeAttribute('disabled')
 }
+function uploadVideo() {
+    if (!upload_video.files[0]) {
+        alert('视频无效')
+        return
+    }
+    if (!upload_cover.files[0]) {
+        alert('封面无效')
+        return
+    }
+    if (title_input.value === '') {
+        alert('标题不可为空')
+        return
+    }
+    if (title_input.value.length > 80) {
+        alert('标题过长')
+        return
+    }
+    if (label_list.children.length === 0) {
+        alert('标签不可为空')
+        return
+    }
+    if (description_input.value.length > 250) {
+        alert('简介过长')
+        return
+    }
+    if (isNaN(video_preview.duration)) {
+        alert('请等待视频加载完毕后再上传')
+        return
+    }
+    submit_button.textContent = '提交中...'
+    submit_button.setAttribute('disabled', 'disabled')
+    const video = upload_video.files[0]
+    const cover = upload_cover.files[0]
+    const length = convertToDuration(video_preview.duration)
+    const title = title_input.value
+    const channel = getNowChannel().id
+    const label = JSON.stringify([...label_list.children].map(v => v.textContent))
+    const description = description_input.value
+    const form = new FormData();
+    form.append("video", video);
+    form.append("cover", cover);
+    form.append("title", title);
+    form.append("length", length);
+    form.append("channel", channel);
+    form.append("label", label);
+    form.append("description", description);
+    form.append("token", user.token);
+    fetch('https://anonym.ink/api/video/video', {
+        method: 'POST',
+        body: form
+    })
+        .then(data => data.json())
+        .then(json => {
+            if (json.status) {
+                alert("上传成功")
+                window.location.href = '/video/?id=' + json.data
+            } else {
+                alert("上传失败：" + json.data)
+                submit_button.removeAttribute('disabled')
+                submit_button.textContent = '提交'
+            }
+        })
+}
 function updateLabelPlaceholder () {
     label_input.placeholder = `还可添加${10 - label_list.children.length}个标签，点击已添加标签可将其删除`
+}
+function convertToDuration(number) {
+    number = parseInt(number)
+    let hour = Math.floor(number / 3600)
+    let minute = Math.floor((number - (hour * 3600))/60)
+    let second = number % 60
+    if (second < 10)
+        second = '0' + second
+    if (minute < 10)
+        minute = '0' + minute
+    if (hour === 0)
+        return `${minute}:${second}`
+    else if (hour < 10)
+        return `0${hour}:${minute}:${second}`
+    else
+        return `${hour}:${minute}:${second}`
+
 }
 function init() {
     main_channel.onchange = function () {
@@ -175,63 +255,7 @@ function init() {
     cover_reader.onload = function () {
         cover_preview.src = cover_reader.result
     }
-    submit_button.onclick = function () {
-        if (!upload_video.files[0]) {
-            alert('视频无效')
-            return
-        }
-        if (!upload_cover.files[0]) {
-            alert('封面无效')
-            return
-        }
-        if (title_input.value === '') {
-            alert('标题不可为空')
-            return
-        }
-        if (title_input.value.length > 80) {
-            alert('标题过长')
-            return
-        }
-        if (label_list.children.length === 0) {
-            alert('标签不可为空')
-            return
-        }
-        if (description_input.value.length > 250) {
-            alert('简介过长')
-            return
-        }
-        submit_button.textContent = '提交中...'
-        submit_button.setAttribute('disabled', 'disabled')
-        const video = upload_video.files[0]
-        const cover = upload_cover.files[0]
-        const title = title_input.value
-        const channel = getNowChannel().id
-        const label = JSON.stringify([...label_list.children].map(v => v.textContent))
-        const description = description_input.value
-        const form = new FormData();
-        form.append("video", video);
-        form.append("cover", cover);
-        form.append("title", title);
-        form.append("channel", channel);
-        form.append("label", label);
-        form.append("description", description);
-        form.append("token", user.token);
-        fetch('https://anonym.ink/api/video/video', {
-            method: 'POST',
-            body: form
-        })
-            .then(data => data.json())
-            .then(json => {
-                if (json.status) {
-                    alert("上传成功")
-                    window.location.href = '/video/?id=' + json.data
-                } else {
-                    alert("上传失败：" + json.data)
-                    submit_button.removeAttribute('disabled')
-                    submit_button.textContent = '提交'
-                }
-            })
-    }
+    submit_button.onclick = uploadVideo
 }
 
 init()
