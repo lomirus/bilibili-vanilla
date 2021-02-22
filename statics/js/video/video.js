@@ -348,25 +348,24 @@ function initVideo() {
                 reject()
                 return
             }
-            if (!json.data.danmakus) json.data.danmakus = []
-            document.title = json.data.title + '_哔哩哔哩 (゜-゜)つロ 干杯~-bilibili'
-            video_title.textContent = json.data.title
-            video_time.textContent = json.data.time
-            video_playNumber.textContent = json.data.views
-            video_danmakuNumber.textContent = json.data.danmakus.length
-            bottom_danmakuNumber.textContent = json.data.danmakus.length
-            toolbar_likes.textContent = json.data.likes
-            toolbar_coins.textContent = json.data.coins
-            toolbar_saves.textContent = json.data.saves
-            toolbar_shares.textContent = json.data.shares
-            info_description.textContent = json.data.description
-            video.src = json.data.video
-            video.poster = json.data.cover
-            loadDanmakus(json.data.danmakus)
-            resolve(json.data.author)
+            if (!json.data.Danmakus) json.data.Danmakus = []
+            document.title = json.data.Title + '_哔哩哔哩 (゜-゜)つロ 干杯~-bilibili'
+            video_title.textContent = json.data.Title
+            video_time.textContent = json.data.Time
+            video_playNumber.textContent = json.data.Views
+            video_danmakuNumber.textContent = json.data.Danmakus.length
+            bottom_danmakuNumber.textContent = json.data.Danmakus.length
+            toolbar_likes.textContent = json.data.Likes
+            toolbar_coins.textContent = json.data.Coins
+            toolbar_saves.textContent = json.data.Saves
+            toolbar_shares.textContent = json.data.Shares
+            info_description.textContent = json.data.Description
+            video.src = json.data.Video
+            video.poster = json.data.Cover
+            loadDanmakus(json.data.Danmakus)
+            resolve(json.data.Author)
         }))
         .then(uid => {
-            console.log('uid', uid)
             fetch('https://anonym.ink/api/user/info/' + uid)
                 .then(data => data.json())
                 .then(json => {
