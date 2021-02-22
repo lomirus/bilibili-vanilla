@@ -385,19 +385,29 @@ function initVideo() {
         .catch(() => {
             jumpTo404()
         })
+    let body =
+        user.token === '' ? {
+            video_id: video_id
+        } : {
+            video_id: video_id,
+            token: user.token
+        }
     fetch('https://anonym.ink/api/video/view', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
         },
-        body: jsonToQuery({
-            video_id: video_id
-        })
+        body: jsonToQuery(body)
     })
         .then(data => data.json())
         .then(json => {
             if (json.status) {
                 console.log('增加播放次数成功')
+                if (json.data === '') return
+                if (json.data === 'SUCCESS')
+                    console.log("每日浏览任务成功：SUCCESS")
+                else if (json.data === 'ALREADY_DONE')
+                    console.log("每日浏览任务失败：ALREADY_DONE")
             } else {
                 console.log('增加播放次数失败：' + json.data)
             }
