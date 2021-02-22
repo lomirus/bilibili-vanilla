@@ -686,4 +686,7 @@ function init() {
 }
 
 init()
-tokenInit.then(() => comment_avatar.src = user.data.Avatar)
+tokenInit.then(() => {
+    if (user.token === '') return
+    comment_avatar.src = user.data.Avatar
+})
