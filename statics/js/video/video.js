@@ -192,16 +192,7 @@ function loadComment(commentData, userData) {
         comment_comments.insertBefore(section, comment_comments.children[0])
 }
 function loadComments(data) {
-    data.forEach(v => {
-        getUserInfo(v.UserId)
-            .then(json => {
-                if (json.status) {
-                    loadComment(v, json.data)
-                } else {
-                    console.log('请求用户信息失败：', json.data)
-                }
-            })
-    })
+    data.forEach(v => loadComment(v, v.User))
 }
 function switchVideoPlayStatus() {
     if (video.paused) {
@@ -672,7 +663,6 @@ function init() {
                     alert('评论失败：' + json.data)
                 }
             })
-        console.log(comment_input.value)
     })
     for (let i in danmaku_type)
         danmaku_type[i].addEventListener('click', () => changeDanmakuType(i));
