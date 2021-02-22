@@ -132,6 +132,10 @@ function updateLabelButton () {
         label_button.setAttribute('disabled', 'disabled')
         return
     }
+    if (label_input.value.length > 19) {
+        label_button.setAttribute('disabled', 'disabled')
+        return
+    }
     if([...label_list.children].map(v => v.textContent).filter(v => v === label_input.value).length) {
         label_button.setAttribute('disabled', 'disabled')
         return
