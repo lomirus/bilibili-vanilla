@@ -54,6 +54,10 @@ const recommend = document.querySelector('#recommend')
 const color_input = document.querySelector('.font_settings>.color>.edit>input')
 const color_preview = document.querySelector('.font_settings>.color>.edit>div')
 const color_list = document.querySelector('.font_settings>.color>.list').children
+const comment_avatar = document.querySelector('#comment>.comment-box img')
+const comment_input = document.querySelector('#comment>.comment-box textarea')
+const comment_button = document.querySelector('#comment>.comment-box button')
+const comment_comments = document.querySelector('#comment>.comments')
 let chosen_danmaku_type = 'scroll'
 
 class Danmaku {
@@ -165,6 +169,27 @@ function loadTags(tags) {
         span.textContent = v
         info_tags.appendChild(span)
     })
+}
+function loadComment(commentData, userData) {
+    let section = document.createElement('section')
+    section.innerHTML =
+        `<a class="avatar" style="background: url(\"${userData.Avatar}\");"></a>
+        <div class="right">
+            <div class="user_info">
+                <span class="username">陈睿</span>
+                <span class="level"></span>
+            </div>
+            <p class="content">asdasd</p>
+            <div class="comment_info">
+                <span class="time">2021-02-20 09:57</span>
+                <span class="like"></span>
+                <span class="hate"></span>
+            </div>
+        </div>`
+    if (comment_comments.children.length === 0)
+        comment_comments.appendChild(section)
+    else
+        comment_comments.insertBefore(section, comment_comments.children[0])
 }
 function switchVideoPlayStatus() {
     if (video.paused) {
@@ -387,6 +412,7 @@ function initVideo() {
                     if (json.status) {
                         console.log('UP: ', json.data)
                         author_avatar.style.backgroundImage = `url(${json.data.Avatar})`
+                        comment_avatar.src = json.data.Avatar
                         author_avatar.href = `/space/?id=${json.data.Uid}`
                         author_username.textContent = json.data.Username
                         author_username.href = `/space/?id=${json.data.Uid}`
