@@ -192,6 +192,7 @@ function loadComment(commentData, userData) {
         comment_comments.insertBefore(section, comment_comments.children[0])
 }
 function loadComments(data) {
+    if (data === null) return
     data.forEach(v => loadComment(v, v.User))
 }
 function switchVideoPlayStatus() {
