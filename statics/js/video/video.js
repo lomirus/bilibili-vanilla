@@ -132,13 +132,19 @@ function sendDanmaku() {
 function loadRecommend(data) {
     data.forEach(v => {
         let section = document.createElement('section')
-        section.innerHTML =
-            `<div><img alt="${v.title}" src="${v.cover}"></div>` +
-            `<p class="title">${v.title}</p>` +
-            `<p class="author">${v.author}</p>` +
-            `<p class="data"><span class="play_number">${v.play_number}</span>` +
-            `<span class="danmaku_number">${v.danmaku_number}</span></p>`
-        recommend.appendChild(section)
+        getUserInfo(v.Author).then(json => {
+            if (json.status) {
+                section.innerHTML =
+                    `<a class="cover" href="/video/?id=${v.Id}"><img alt="${v.Title}" src="${v.Cover}"></a>` +
+                    `<a class="title" href="/video/?id=${v.Id}">${v.Title}</a>` +
+                    `<a class="author" href="/space/?id=${v.Author}">${json.data.Username}</a>` +
+                    `<p class="data"><span class="view_number">${v.Views}</span>` +
+                    `<span class="like_number">${v.Likes}</span></p>`
+                recommend.appendChild(section)
+            } else {
+                console.log("获取推荐视频失败：", json.data)
+            }
+        })
     })
 }
 function loadDanmakus(danmakus) {
@@ -384,6 +390,15 @@ function initVideo() {
         .catch(() => {
             jumpTo404()
         })
+    fetch('https://anonym.ink/api/video/recommend?video_id=' + video_id)
+        .then(data => data.json())
+        .then(json => {
+            if (json.status) {
+                loadRecommend(json.data)
+            } else {
+                console.log("获取推荐视频失败：", json.data)
+            }
+        })
     let body =
         user.token === '' ? {
             video_id: video_id
@@ -587,61 +602,5 @@ function init() {
     for (let v of color_list)
         v.addEventListener('click', () => changeDanmakuColor(v.style.backgroundColor));
 }
-function test() {
-    let recommend_data = [
-        {
-            cover: '/statics/test/rcmd7.webp',
-            title: '【8848】跌跟头手机',
-            author: '古月浪子',
-            play_number: '162',
-            danmaku_number: '10',
-        }, {
-            cover: '/statics/test/rcmd2.webp',
-            title: '[CS:GO]经典差点干掉队友拿五杀',
-            author: 'ほしの雲しょう',
-            play_number: '6',
-            danmaku_number: '0',
-        }, {
-            cover: '/statics/test/rcmd3.webp',
-            title: 'CSS进阶',
-            author: 'kying-star',
-            play_number: '789',
-            danmaku_number: '2',
-        }, {
-            cover: '/statics/test/rcmd4.webp',
-            title: 'Web后端第四节课-go杂谈&常用包',
-            author: 'sarail',
-            play_number: '48',
-            danmaku_number: '0',
-        }, {
-            cover: '/statics/test/rcmd5.png',
-            title: '我是#鹿乃#的NO.008757号真爱粉，靓号在手，走路带风，解锁专属粉丝卡片，使用专属粉丝装扮，你也来生成你的专属秀起来吧！',
-            author: '辇道增柒',
-            play_number: '40',
-            danmaku_number: '0',
-        }, {
-            cover: '/statics/test/rcmd6.webp',
-            title: '打爆灯塔！快乐的Sword Art Online: Fatal Bullet',
-            author: 'ほしの雲しょう',
-            play_number: '74',
-            danmaku_number: '0',
-        }, {
-            cover: '/statics/test/rcmd1.webp',
-            title: 'Dota2主播日记226期：翔哥NB，zardNB，肚皇NB（都破音）',
-            author: '抽卡素材库',
-            play_number: '4183',
-            danmaku_number: '29',
-        }, {
-            cover: '/statics/test/rcmd8.webp',
-            title: '【原神钢琴】晚安，璃月 | Good Night, Liyue',
-            author: 'jerritaaa',
-            play_number: '33',
-            danmaku_number: '0',
-        }
-    ]
-
-    loadRecommend(recommend_data)
-}
 
 init()
-test()

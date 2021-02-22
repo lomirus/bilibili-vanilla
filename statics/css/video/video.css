@@ -693,7 +693,7 @@
     grid-column-gap: 10px;
     margin: 12px 0;
 }
-#recommend>section div{
+#recommend>section>.cover{
     grid-row-start: 1;
     grid-row-end: 4;
     border-radius: 2px;
@@ -708,6 +708,11 @@
     font-size: 14px;
     height: 36px;
     overflow: hidden;
+    color: #222;
+    transition: color .3s;
+}
+#recommend>section>.title:hover {
+    color: #00A1D6;
 }
 #recommend>section>.author{
     margin: 0 0 4px 0;
@@ -719,9 +724,9 @@
     color: #999;
     margin: 0;
 }
-#recommend>section>.data>.play_number::after{
+#recommend>section>.data>.view_number::after{
     content: " 播放 · ";
 }
-#recommend>section>.data>.danmaku_number::after{
-    content: " 弹幕";
+#recommend>section>.data>.like_number::after{
+    content: " 点赞";
 }
