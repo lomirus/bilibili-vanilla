@@ -178,7 +178,7 @@ function loadComment(commentData, userData) {
         <div class="right">
             <div class="user_info">
                 <span class="username">${userData.Username}</span>
-                <span class="level"></span>
+                <span class="level" lv="${getLevel(userData.Exp)}"></span>
             </div>
             <p class="content">${commentData.Value}</p>
             <div class="comment_info">

@@ -865,7 +865,24 @@
     width: 19px;
     height: 9px;
     background-position-x: -80px;
+}
+#comment>.comments>section .user_info>.level[lv='1'] {
+    background-position-y: -49px;
+}
+#comment>.comments>section .user_info>.level[lv='2'] {
+    background-position-y: -85px;
+}
+#comment>.comments>section .user_info>.level[lv='3'] {
+    background-position-y: -121px;
+}
+#comment>.comments>section .user_info>.level[lv='4'] {
     background-position-y: -157px;
+}
+#comment>.comments>section .user_info>.level[lv='5'] {
+    background-position-y: -193px;
+}
+#comment>.comments>section .user_info>.level[lv='6'] {
+    background-position-y: -229px;
 }
 #comment>.comments>section .content {
     margin: 0 0 2px 0;
