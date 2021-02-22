@@ -10,8 +10,41 @@ const gender_span = document.querySelector('#main span.gender')
 const gender_button = document.querySelector('#main button.gender')
 const birthday_span = document.querySelector('#main span.birthday')
 const birthday_button = document.querySelector('#main button.birthday')
+const bonus_checkIn = document.querySelector('#bonus .check-in')
+const bonus_dailyView = document.querySelector('#bonus .daily-view')
+const bonus_dailyCoin = document.querySelector('#bonus .daily-coin')
 
 async function init() {
+    fetch('https://anonym.ink/api/user/daily?token=' + user.token)
+        .then(data => data.json())
+        .then(json => {
+            if (json.status) {
+                console.log(json.data)
+                if (json.data['check-in']) {
+                    bonus_checkIn.classList.add('done')
+                    bonus_checkIn.textContent = '已完成'
+                } else {
+                    bonus_checkIn.classList.add('doing')
+                    bonus_checkIn.textContent = '未完成'
+                }
+                if (json.data['view']) {
+                    bonus_dailyView.classList.add('done')
+                    bonus_dailyView.textContent = '已完成'
+                } else {
+                    bonus_dailyView.classList.add('doing')
+                    bonus_dailyView.textContent = '未完成'
+                }
+                if (json.data['coin'] === 50) {
+                    bonus_dailyCoin.classList.add('done')
+                    bonus_dailyCoin.textContent = '已完成'
+                } else {
+                    bonus_dailyCoin.classList.add('doing')
+                    bonus_dailyCoin.textContent = json.data['coin'] + ' / 50'
+                }
+            } else {
+                console.log("获取日常任务进度失败：", json.data)
+            }
+        })
     avatar_img.src = user.data.Avatar
     username_span.innerText = user.data.Username
     statement_span.innerText = user.data.Statement
