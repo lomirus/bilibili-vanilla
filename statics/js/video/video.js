@@ -191,6 +191,18 @@ function loadComment(commentData, userData) {
     else
         comment_comments.insertBefore(section, comment_comments.children[0])
 }
+function loadComments(data) {
+    data.forEach(v => {
+        getUserInfo(v.UserId)
+            .then(json => {
+                if (json.status) {
+                    loadComment(v, json.data)
+                } else {
+                    console.log('请求用户信息失败：', json.data)
+                }
+            })
+    })
+}
 function switchVideoPlayStatus() {
     if (video.paused) {
         video.play()
@@ -490,6 +502,15 @@ function initVideo() {
                 }
             } else {
                 console.log('获取投币状态失败：' + json.data)
+            }
+        })
+    fetch('https://anonym.ink/api/video/comments?video_id=' + video_id)
+        .then(data => data.json())
+        .then(json => {
+            if (json.status) {
+                loadComments(json.data)
+            } else {
+                console.log("加载评论失败：", json.data)
             }
         })
 }
