@@ -7,7 +7,7 @@ function loadList(list, data) {
         getUserInfo(data[i].Author).then(json => {
             if (json.status) {
                 article.innerHTML =
-                    `<a class="cover" href="/video/?id=${data[i].Author}" target="_blank">
+                    `<a class="cover" href="/video/?id=${data[i].Id}" target="_blank">
                         <img src="${data[i].Cover}">
                         <div class="info">
                             <span class="views">${data[i].Views}</span>
@@ -15,7 +15,7 @@ function loadList(list, data) {
                             <span class="length">${data[i].Length}</span>
                         </div>
                     </a>
-                    <a class="title" href="/video/?id=${data[i].Author}" target="_blank">${data[i].Title}</a>
+                    <a class="title" href="/video/?id=${data[i].Id}" target="_blank">${data[i].Title}</a>
                     <a class="author" href="/space/?id=${data[i].Author}" target="_blank">${json.data.Username}</a>`
                 list.appendChild(article)
             } else {
@@ -28,7 +28,7 @@ function loadRank(rank, data) {
     for (let i = 0; i < 10; i++) {
         if (!data[i]) break
         let a = document.createElement('a')
-        a.setAttribute('href', '/video/114514')
+        a.setAttribute('href', '/video/?id=' + data[i].Id)
         a.setAttribute('target', '_blank')
         a.innerText = data[i].Title
         rank.appendChild(a)
