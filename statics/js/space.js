@@ -9,6 +9,7 @@ const tab_moments = document.querySelector('#tab_moments')
 const tab_post = document.querySelector('#tab_post')
 const tab_underline = document.querySelector('#tab_underline')
 const video_wrapper = document.querySelector('#video_wrapper')
+const video_count = document.querySelector('#video_title>.count')
 const queries = queryToJson()
 
 function moveUnderline(left = getInitTabLeft()) {
@@ -23,6 +24,7 @@ function getInitTabLeft() {
     }
 }
 function loadVideos(data) {
+    video_count.textContent = data.length
     data.forEach((v,i) => {
         let section = document.createElement('section')
         section.innerHTML =
