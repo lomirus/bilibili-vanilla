@@ -635,7 +635,6 @@
     grid-column-end: 2;
     grid-row-start: 3;
     grid-row-end: 4;
-    margin-bottom: 200px;
 }
 #info>.toolbar {
     display: flex;
@@ -690,7 +689,9 @@
 #info>.tags {
     display: flex;
     flex-wrap: wrap;
-    margin-top: 16px;
+    padding: 16px 0 20px 0;
+    border-bottom: 1px solid #e5e9ef;
+    margin-bottom: 20px;
 }
 #info>.tags>span {
     display: block;
@@ -752,4 +753,71 @@
 }
 #recommend>section>.data>.like_number::after{
     content: " 点赞";
+}
+
+#comment {
+    margin-bottom: 100px;
+}
+#comment>.count {
+    display: block;
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+#comment>.count::after {
+    content: "评论";
+    margin-left: 10px;
+}
+#comment>.sort {
+    display: flex;
+    border-bottom: 1px solid #e5e9ef;
+    margin-bottom: 24px;
+}
+#comment>.sort>span {
+    font-size: 14px;
+    font-weight: 700;
+    padding: 8px 0;
+    cursor: pointer;
+}
+#comment>.sort>span:hover {
+    color: #00A1D6;
+}
+#comment>.sort>.by-like {
+    margin-right: 32px;
+}
+#comment>.comment-box {
+    display: flex;
+    align-items: center;
+}
+#comment>.comment-box>img {
+    margin-left: 5px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+}
+#comment>.comment-box>textarea {
+    margin-left: 32px;
+    margin-right: 10px;
+    padding: 5px 10px;
+    background-color: #f4f5f7;
+    border: 1px solid #e5e9ef;
+    resize: none;
+    width: 637px;
+    height: 65px;
+    box-sizing: border-box;
+    color: #555;
+    font-size: 12px;
+}
+#comment>.comment-box>button {
+    background-color: #00a1d6;
+    width: 70px;
+    height: 64px;
+    padding: 4px 18px;
+    border: none;
+    border-radius: 4px;
+    color: #FFF;
+    transition: .1s;
+    cursor: pointer;
+}
+#comment>.comment-box>button:hover {
+    background-color: #00b5e5;
 }
