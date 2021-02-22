@@ -684,6 +684,7 @@
     font-size: 12px;
     color: #212121;
     margin: 0;
+    white-space: pre-line;
 }
 
 #info>.tags {
