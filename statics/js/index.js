@@ -16,6 +16,7 @@ function loadList(list, data) {
             <a class="title" href="/video/?id=${data[i].Id}" target="_blank">${data[i].Title}</a>
             <a class="author" href="/space/?id=${data[i].Author}" target="_blank">${data[i].User.Username}</a>`
         list.appendChild(article)
+    }
 }
 function loadRank(rank, data) {
     for (let i = 0; i < 10; i++) {
