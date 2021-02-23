@@ -524,6 +524,21 @@ function initVideo() {
                 console.log('增加播放次数失败：' + json.data)
             }
         })
+    fetch('https://anonym.ink/api/video/comments?video_id=' + video_id)
+        .then(data => data.json())
+        .then(json => {
+            if (json.status) {
+                if (json.data === null) {
+                    comment_count.textContent = '0'
+                } else {
+                    comment_count.textContent = json.data.length
+                    loadComments(json.data)
+                }
+            } else {
+                console.log("加载评论失败：", json.data)
+            }
+        })
+    
     if (user.token === '') return
     fetch('https://anonym.ink/api/video/like?video_id=' + video_id + '&token=' + user.token, {
         method: 'GET',
@@ -553,20 +568,6 @@ function initVideo() {
                 }
             } else {
                 console.log('获取投币状态失败：' + json.data)
-            }
-        })
-    fetch('https://anonym.ink/api/video/comments?video_id=' + video_id)
-        .then(data => data.json())
-        .then(json => {
-            if (json.status) {
-                if (json.data === null) {
-                    comment_count.textContent = '0'
-                } else {
-                    comment_count.textContent = json.data.length
-                    loadComments(json.data)
-                }
-            } else {
-                console.log("加载评论失败：", json.data)
             }
         })
 }
