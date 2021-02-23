@@ -120,6 +120,7 @@ function sendDanmaku() {
         .then(data => data.json())
         .then(json => {
             if (json.status) {
+		danmaku_input.value = ''
                 new Danmaku(json.data)
                 video.addEventListener('timeupdate', () => {
                     if (Math.floor(video.currentTime) === json.data.Location) {
