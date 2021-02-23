@@ -411,6 +411,7 @@ function initVideo() {
                         console.log('UP: ', json.data)
                         author_avatar.style.backgroundImage = `url(${json.data.Avatar})`
                         author_avatar.href = `/space/?id=${json.data.Uid}`
+                        author_button.textContent = `+ 关注 ${json.data.Followers}`
                         author_username.textContent = json.data.Username
                         author_username.href = `/space/?id=${json.data.Uid}`
                         author_statement.textContent = json.data.Statement

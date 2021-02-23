@@ -4,6 +4,10 @@ const up_statement = document.querySelector('#banner>.left>.statement')
 const up_level = document.querySelector('#banner>.left>.userinfo>.level')
 const up_uid = document.querySelector('#home>.right>.info>.uid')
 const up_birthday = document.querySelector('#home>.right>.info>.birthday')
+const up_followings = document.querySelector('#banner_bottom>.right>.followings>.value')
+const up_followers = document.querySelector('#banner_bottom>.right>.followers>.value')
+const up_likes = document.querySelector('#banner_bottom>.right>.likes>.value')
+const up_views = document.querySelector('#banner_bottom>.right>.views>.value')
 const tab_home = document.querySelector('#tab_home')
 const tab_moments = document.querySelector('#tab_moments')
 const tab_post = document.querySelector('#tab_post')
@@ -70,6 +74,10 @@ function initUser() {
             up_level.setAttribute('lv', getLevel(json.data.Exp))
             up_uid.textContent = json.data.Uid
             up_birthday.textContent = json.data.Birthday === '9999-12-12' ? '未填写' : json.data.Birthday.substring(5)
+            up_followings.textContent = json.data.Followings
+            up_followers.textContent = json.data.Followers
+            up_likes.textContent = json.data.TotalLikes
+            up_views.textContent = json.data.TotalViews
             loadVideos(json.data.Videos)
         } else {
             jumpTo404()
