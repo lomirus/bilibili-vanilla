@@ -12,9 +12,11 @@ const tab_home = document.querySelector('#tab_home')
 const tab_moments = document.querySelector('#tab_moments')
 const tab_post = document.querySelector('#tab_post')
 const tab_underline = document.querySelector('#tab_underline')
+const follow_button = document.querySelector('#follow')
 const video_wrapper = document.querySelector('#video_wrapper')
 const video_count = document.querySelector('#video_title>.count')
 const queries = queryToJson()
+const up = { data: {} }
 
 function moveUnderline(left = getInitTabLeft()) {
     tab_underline.style.left = left
@@ -64,9 +66,9 @@ function formatDate(time) {
 }
 
 function initUser() {
-    getUserInfo(queries.id).then(json => {
+    let upPromise = getUserInfo(queries.id).then(json => {
         if (json.status) {
-            console.log('UP: ', json.data)
+            up.data = json.data
             document.title = json.data.Username + '的个人空间 - ビリビリ ( ゜- ゜)つロ 乾杯~ Bilibili'
             up_avatar.src = json.data.Avatar
             up_username.textContent = json.data.Username
@@ -83,6 +85,29 @@ function initUser() {
             jumpTo404()
         }
     })
+    Promise.all([tokenInit, upPromise]).then(() => {
+        fetch('https://anonym.ink/api/user/follow?' + jsonToQuery({
+            a: user.data.Uid,
+            b: up.data.Uid
+        }))
+            .then(data => data.json())
+            .then(json => {
+                if (json.status) {
+                    if (json.data > 0) {
+                        follow_button.classList.add('following')
+                        follow_button.textContent = '已关注'
+                    }
+                } else {
+                    console.log('获取关注信息失败：', json.data)
+                }
+            })
+    })
+
+    /*let uid = null
+    if (localStorage.getItem('uid'))
+        uid = localStorage.getItem('uid')
+    else if (sessionStorage.getItem('uid'))
+        uid = sessionStorage.getItem('uid')*/
 }
 function init() {
     initUser()

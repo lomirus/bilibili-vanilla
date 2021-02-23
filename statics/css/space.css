@@ -100,15 +100,24 @@ header {
 #banner>.right #follow {
     background: #f25d8e;
     color: #fff;
-    border: solid 2px #fff;
+    box-shadow: 0 0 0 2px #fff;
     border-radius: 4px;
     width: 80px;
     height: 34px;
     cursor: pointer;
+    border: none;
+}
+#banner>.right #follow.following {
+    background: rgba(0,0,0,.45);
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
 }
 #banner>.right #follow:hover {
     background: #ff85ad;
 }
+#banner>.right #follow.following:hover {
+    background: rgba(0,0,0,.5);
+}
+
 
 #banner_bottom {
     width: 1283px;
