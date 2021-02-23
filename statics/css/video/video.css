@@ -711,6 +711,10 @@
     border-color: #00a1d6;
 }
 
+.wide #recommend {
+    grid-column-start: 2;
+    grid-column-end: 3;
+}
 #recommend>section {
     display: grid;
     grid-template-rows: 42px 20px 16px;
@@ -754,6 +758,11 @@
 }
 #recommend>section>.data>.like_number::after{
     content: " 点赞";
+}
+
+.wide #under_video {
+    grid-row-start: 3;
+    grid-row-end: 4;
 }
 
 #comment>.count {
