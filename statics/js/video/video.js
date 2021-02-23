@@ -138,19 +138,13 @@ function sendDanmaku() {
 function loadRecommend(data) {
     data.forEach(v => {
         let section = document.createElement('section')
-        getUserInfo(v.Author).then(json => {
-            if (json.status) {
-                section.innerHTML =
-                    `<a class="cover" href="/video/?id=${v.Id}"><img alt="${v.Title}" src="${v.Cover}"></a>` +
-                    `<a class="title" href="/video/?id=${v.Id}">${v.Title}</a>` +
-                    `<a class="author" href="/space/?id=${v.Author}">${json.data.Username}</a>` +
-                    `<p class="data"><span class="view_number">${v.Views}</span>` +
-                    `<span class="like_number">${v.Likes}</span></p>`
-                recommend.appendChild(section)
-            } else {
-                console.log("获取推荐视频失败：", json.data)
-            }
-        })
+        section.innerHTML =
+            `<a class="cover" href="/video/?id=${v.Id}"><img alt="${v.Title}" src="${v.Cover}"></a>` +
+            `<a class="title" href="/video/?id=${v.Id}">${v.Title}</a>` +
+            `<a class="author" href="/space/?id=${v.Author}">${v.User.Username}</a>` +
+            `<p class="data"><span class="view_number">${v.Views}</span>` +
+            `<span class="like_number">${v.Likes}</span></p>`
+        recommend.appendChild(section)
     })
 }
 function loadDanmakus(danmakus) {
