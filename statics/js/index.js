@@ -4,25 +4,18 @@ function loadList(list, data) {
     for (let i = 0; i < 8; i++) {
         if (!data[i]) break
         let article = document.createElement('article')
-        getUserInfo(data[i].Author).then(json => {
-            if (json.status) {
-                article.innerHTML =
-                    `<a class="cover" href="/video/?id=${data[i].Id}" target="_blank">
-                        <img src="${data[i].Cover}">
-                        <div class="info">
-                            <span class="views">${data[i].Views}</span>
-                            <span class="likes">${data[i].Likes}</span>
-                            <span class="length">${data[i].Length}</span>
-                        </div>
-                    </a>
-                    <a class="title" href="/video/?id=${data[i].Id}" target="_blank">${data[i].Title}</a>
-                    <a class="author" href="/space/?id=${data[i].Author}" target="_blank">${json.data.Username}</a>`
-                list.appendChild(article)
-            } else {
-                console.log("获取UP主信息失败：", json.data)
-            }
-        })
-    }
+        article.innerHTML =
+            `<a class="cover" href="/video/?id=${data[i].Id}" target="_blank">
+                <img src="${data[i].Cover}">
+                <div class="info">
+                    <span class="views">${data[i].Views}</span>
+                    <span class="likes">${data[i].Likes}</span>
+                    <span class="length">${data[i].Length}</span>
+                </div>
+            </a>
+            <a class="title" href="/video/?id=${data[i].Id}" target="_blank">${data[i].Title}</a>
+            <a class="author" href="/space/?id=${data[i].Author}" target="_blank">${data[i].User.Username}</a>`
+        list.appendChild(article)
 }
 function loadRank(rank, data) {
     for (let i = 0; i < 10; i++) {
