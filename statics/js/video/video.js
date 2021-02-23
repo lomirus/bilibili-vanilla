@@ -170,10 +170,10 @@ function loadTags(tags) {
 function loadComment(commentData, userData) {
     let section = document.createElement('section')
     section.innerHTML =
-        `<a class="avatar" style="background-image: url(${userData.Avatar});"></a>
+        `<a class="avatar" href="/space?id=${userData.Uid}" style="background-image: url(${userData.Avatar});"></a>
         <div class="right">
             <div class="user_info">
-                <span class="username">${userData.Username}</span>
+                <a class="username" href="/space?id=${userData.Uid}">${userData.Username}</a>
                 <span class="level" lv="${getLevel(userData.Exp)}"></span>
             </div>
             <p class="content">${commentData.Value}</p>
