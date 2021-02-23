@@ -127,8 +127,10 @@ function initUserHover() {
 function logout() {
     localStorage.removeItem('token')
     localStorage.removeItem('refreshToken')
+    localStorage.removeItem('uid')
     sessionStorage.removeItem('token')
     sessionStorage.removeItem('refreshToken')
+    sessionStorage.removeItem('uid')
     window.location.reload()
 }
 function getLevel(exp) {
