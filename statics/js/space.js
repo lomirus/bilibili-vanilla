@@ -102,12 +102,6 @@ function initUser() {
                 }
             })
     })
-
-    /*let uid = null
-    if (localStorage.getItem('uid'))
-        uid = localStorage.getItem('uid')
-    else if (sessionStorage.getItem('uid'))
-        uid = sessionStorage.getItem('uid')*/
 }
 function init() {
     initUser()
@@ -139,6 +133,38 @@ function init() {
         tab_home.classList.remove('now_tab')
         tab_moments.classList.remove('now_tab')
         tab_post.classList.add('now_tab')
+    })
+    follow_button.addEventListener('click', function () {
+        if (user.token === '') {
+            alert('请先登录')
+        } else if (user.data.Uid === up.data.Uid) {
+            alert('你时刻都在关注自己')
+        } else {
+            fetch('https://anonym.ink/api/user/follow', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: jsonToQuery({
+                    uid: up.data.Uid,
+                    token: user.token
+                })
+            })
+                .then(data => data.json())
+                .then(json => {
+                    if (json.status) {
+                        if (json.data) {
+                            follow_button.classList.add('following')
+                            follow_button.textContent = '已关注'
+                        } else {
+                            follow_button.classList.remove('following')
+                            follow_button.textContent = '关注'
+                        }
+                    } else {
+                        console.log('关注/取消关注失败：', json.data)
+                    }
+                })
+            }
     })
 
     moveUnderline()
