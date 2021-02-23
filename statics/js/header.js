@@ -183,11 +183,7 @@ function queryToJson() {
         queryStr
             .split('&')
             .map(v => v.split('='))
-            .forEach(v =>
-                json[v[0]] = v[1]
-                    .replace(/%3D/g, '=')
-                    .replace(/%26/g, '&')
-            )
+            .forEach(v => json[v[0]] = decodeURIComponent(v[1]))
     }
     return json
 }
