@@ -84,6 +84,7 @@ const uh_progress = document.querySelector('body>header>.hover>.user>.level_cont
 const uh_coin = document.querySelector('body>header>.hover>.user>.money>.coin>span')
 const uh_bCoin = document.querySelector('body>header>.hover>.user>.money>.b-coin>span')
 const logout_button = document.querySelector('body>header>.hover>.user>.logout>span')
+const search_input = document.querySelector('body>header #search>input')
 
 const user = { token: '', refreshToken: '', data: {} }
 
