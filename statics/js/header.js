@@ -21,10 +21,11 @@ function renderHeader() {
                 <a id="nav_download" href="https://github.com/Override0330/WinterExam-Android-2020"
                     target="_blank"><span class="bilifont">&#xE72D;</span>下载APP</a>
             </div>
-            <form id="search">
+            <div id="search">
                 <input>
-                <button class="bilifont">&#xE72C;</button>
-            </form>
+                <button class="bilifont"
+                    onclick="let keywords = this.previousElementSibling.value; if (keywords === '') return; window.location.href='/search/?keywords=' + keywords">&#xE72C;</button>
+            </div>
             <div class="user_operation">
                 ${logged ? 
                     `<img class="user">
