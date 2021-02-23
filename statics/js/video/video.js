@@ -446,6 +446,27 @@ function initVideo() {
                     }
                     resolve(false)
                 } else {
+                    author_button.onclick = function() {
+                        fetch('https://anonym.ink/api/user/follow', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded'
+                            },
+                            body: jsonToQuery({
+                                uid: up.data.Uid,
+                                token: user.token
+                            })
+                        })
+                            .then(data => data.json())
+                            .then(json => {
+                                if (json.status) {
+                                    up.data.Followers += json.data ? 1 : -1
+                                    updateFollowButton([up.data.Followers, json.data])
+                                } else {
+                                    console.log('关注/取消关注失败：', json.data)
+                                }
+                            })
+                    }
                     fetch('https://anonym.ink/api/user/follow?' + jsonToQuery({
                         a: uid,
                         b: UPuid
