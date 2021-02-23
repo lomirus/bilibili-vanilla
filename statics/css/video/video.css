@@ -79,6 +79,10 @@
     transition: all .3s;
     cursor: pointer;
 }
+#author button.following {
+    background-color: #E7E7E7 !important;
+    color: #999999 !important;
+}
 #author button:hover {
      background-color: #00b5e6;
 }

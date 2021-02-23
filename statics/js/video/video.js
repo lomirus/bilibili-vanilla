@@ -59,6 +59,7 @@ const comment_input = document.querySelector('#comment>.comment-box textarea')
 const comment_button = document.querySelector('#comment>.comment-box button')
 const comment_count = document.querySelector('#comment>.count')
 const comment_comments = document.querySelector('#comment>.comments')
+const up = { data: {} }
 let chosen_danmaku_type = 'scroll'
 
 class Danmaku {
@@ -188,6 +189,15 @@ function loadComment(commentData, userData) {
 }
 function loadComments(data) {
     data.forEach(v => loadComment(v, v.User))
+}
+function updateFollowButton([Followers, isFollowing]) {
+    if (isFollowing) {
+        author_button.classList.add('following')
+        author_button.textContent = '已关注 ' + Followers
+    } else {
+        author_button.classList.remove('following')
+        author_button.textContent = '+ 关注 ' + Followers
+    }
 }
 function switchVideoPlayStatus() {
     if (video.paused) {
@@ -382,7 +392,7 @@ function initVideo() {
         .then(json => new Promise((resolve, reject) => {
             console.log('Video: ', json.data)
             if (!json.status) {
-                reject()
+                jumpTo404()
                 return
             }
             if (!json.data.Danmakus) json.data.Danmakus = []
@@ -403,25 +413,58 @@ function initVideo() {
             loadTags(json.data.Label)
             resolve(json.data.Author)
         }))
-        .then(uid => {
-            fetch('https://anonym.ink/api/user/info/' + uid)
+        .then(UPuid => {
+            let p1 = fetch('https://anonym.ink/api/user/info/' + UPuid)
                 .then(data => data.json())
-                .then(json => {
+                .then(json => new Promise(resolve => {
                     if (json.status) {
-                        console.log('UP: ', json.data)
+                        up.data = json.data
                         author_avatar.style.backgroundImage = `url(${json.data.Avatar})`
                         author_avatar.href = `/space/?id=${json.data.Uid}`
-                        author_button.textContent = `+ 关注 ${json.data.Followers}`
                         author_username.textContent = json.data.Username
                         author_username.href = `/space/?id=${json.data.Uid}`
                         author_statement.textContent = json.data.Statement
+                        resolve(json.data.Followers)
                     } else {
                         alert('获取UP信息失败：' + json.data)
                     }
-                })
-        })
-        .catch(() => {
-            jumpTo404()
+                }))
+            let p2 = new Promise(resolve => {
+                let uid = null
+                if (localStorage.getItem('uid'))
+                    uid = localStorage.getItem('uid')
+                else if (sessionStorage.getItem('uid'))
+                    uid = sessionStorage.getItem('uid')
+                if (!uid) {
+                    author_button.onclick = function () {
+                        alert('请先登录')
+                    }
+                    resolve(false)
+                } else if (uid === UPuid.toString()) {
+                    author_button.onclick = function () {
+                        alert('你时刻都在关注自己')
+                    }
+                    resolve(false)
+                } else {
+                    fetch('https://anonym.ink/api/user/follow?' + jsonToQuery({
+                        a: uid,
+                        b: UPuid
+                    }))
+                        .then(data => data.json())
+                        .then(json => {
+                            if (json.status) {
+                                if (json.data > 0)
+                                    resolve(true)
+                                else
+                                    resolve(false)
+                            } else {
+                                console.log('获取关注信息失败：', json.data)
+                                resolve(false)
+                            }
+                        })
+                }
+            })
+            Promise.all([p1, p2]).then(data => updateFollowButton(data))
         })
     fetch('https://anonym.ink/api/video/recommend?video_id=' + video_id)
         .then(data => data.json())
@@ -570,7 +613,7 @@ function init() {
     controls_fullScreen.addEventListener('click', () => switchVideoSize('fullScreen'))
     color_input.addEventListener('input', () => {
         color_input.value = color_input.value.toUpperCase()
-        color_preview.style.backgroundColo = checkHex(color_input.value) ? color_input.value : 'rgba(0,0,0,0)';
+        color_preview.style.backgroundColor = checkHex(color_input.value) ? color_input.value : 'rgba(0,0,0,0)';
     })
     toolbar_likes.addEventListener('click', () => {
         if (user.token === '') {
