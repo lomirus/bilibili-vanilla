@@ -30,6 +30,10 @@ function getInitTabLeft() {
     }
 }
 function loadVideos(data) {
+    if (!data) {
+        video_count.textContent = '0'
+        return
+    }
     video_count.textContent = data.length
     data.forEach((v,i) => {
         let section = document.createElement('section')
