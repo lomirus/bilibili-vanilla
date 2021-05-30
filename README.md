@@ -1,10 +1,12 @@
 ## Introduction
 
-An imitated bilibili, only front-end part. You can also get back-end codes [here](https://github.com/theognis/bilibili).
+An imitated bilibili, only front-end part. It's originally developed as my winter assessment work. You can also get corresponding back-end codes [here](https://github.com/theognis/bilibili).
 
-## Origin
+## Features
 
-Originally developed as winter assessment work.
+- Pure Vanilla JS
+- Zero Configuration
+- No Extra Dependicies
 
 ## Run
 
